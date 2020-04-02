@@ -1,15 +1,16 @@
-package com.example.towerofhanoi.app;
+package com.example.towerofhanoi.init;
 
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.preference.PreferenceManager;
+import android.util.Log;
+
+import java.util.Locale;
 
 public class InitApplication extends Application {
     public static final String NIGHT_MODE = "NIGHT_MODE";
-    public static final String LANGUAGE = "LANGUAGE";
-
-    private String language = "en";//Locale.getDefault().toString();
 
     private boolean nightModeEnabled = false;
 
@@ -38,20 +39,6 @@ public class InitApplication extends Application {
         singleton = this;
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         this.nightModeEnabled = mPrefs.getBoolean(NIGHT_MODE, false);
-        this.language = mPrefs.getString(LANGUAGE, "en");
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-
-        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = mPrefs.edit();
-        editor.putString(NIGHT_MODE, this.language);
-        editor.apply();
     }
 
     public boolean isNightModeEnabled() {
