@@ -1,35 +1,29 @@
 package com.example.towerofhanoi.init;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
-import java.util.Locale;
-
+@SuppressLint("Registered")
 public class InitApplication extends Application {
     public static final String NIGHT_MODE = "NIGHT_MODE";
-
-    private boolean nightModeEnabled = false;
-
     private static InitApplication singleton = null;
-
+    private boolean nightModeEnabled = false;
     private Context context;
+
+    public InitApplication(Context c) {
+        context = c;
+    }
 
     public static InitApplication getInstance(Context c) {
 
-        if(singleton == null)
-        {
+        if (singleton == null) {
             singleton = new InitApplication(c);
             singleton.onCreate();
         }
         return singleton;
-    }
-
-    public InitApplication(Context c) {
-        context = c;
     }
 
     @Override
