@@ -1,8 +1,10 @@
-package com.example.towerofhanoi;
+package com.example.towerofhanoi.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.towerofhanoi.R;
 
 public class MainActivity extends AppCompatActivity {
 
