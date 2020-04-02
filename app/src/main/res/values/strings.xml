@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name"></string>
+    <string name="menu_button_play"></string>
+    <string name="menu_button_scores"></string>
+    <string name="menu_text_title"></string>
+
 </resources>
