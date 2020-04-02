@@ -9,6 +9,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.WindowManager;
 
 import com.example.towerofhanoi.R;
@@ -40,11 +41,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
 
-setLocale(new Locale("en"));
+        AppCompatDelegate.setDefaultNightMode(InitApplication.getInstance(this).isNightModeEnabled()?
+                AppCompatDelegate.MODE_NIGHT_YES:AppCompatDelegate.MODE_NIGHT_NO);
 
-
+        setLocale(new Locale(InitApplication.getInstance(this).getLanguage()));
 
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -55,5 +57,9 @@ setLocale(new Locale("en"));
         menu = new FragmentMenu();
 
         getSupportFragmentManager().beginTransaction().add(R.id.mainFrame, menu).commit();
+    }
+
+    private static void debug(String msg) {
+        Log.d("AAAAAAAAAAAAA", msg);
     }
 }
