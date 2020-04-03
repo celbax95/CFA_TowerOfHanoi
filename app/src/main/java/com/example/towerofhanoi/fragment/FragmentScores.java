@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -13,13 +14,13 @@ import androidx.annotation.Nullable;
 import com.example.towerofhanoi.R;
 import com.example.towerofhanoi.app.FragmentManager;
 import com.example.towerofhanoi.app.MainActivity;
+import com.example.towerofhanoi.model.DisksButtonsAdapter;
 
 public class FragmentScores extends Fragment {
 
     private static final String NAME = "SCORES";
 
     ListView listDisksButtons;
-    ImageButton backButton;
 
     public FragmentScores(MainActivity context, FragmentManager fragmentManager, String name) {
         super(context, fragmentManager,name);
@@ -48,7 +49,7 @@ public class FragmentScores extends Fragment {
     }
 
     private void createBackButton(View v) {
-        backButton = v.findViewById(R.id.scores_button_back);
+        ImageButton backButton = v.findViewById(R.id.scores_button_back);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +63,16 @@ public class FragmentScores extends Fragment {
     private void createListDisksButtons(View v) {
         listDisksButtons = v.findViewById(R.id.scores_listView_disksButtons);
 
-    }
+        DisksButtonsAdapter disksButtonsAdapter = new DisksButtonsAdapter(context, 3);
 
+        listDisksButtons.setAdapter(disksButtonsAdapter);
+
+        listDisksButtons.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            }
+        });
+
+        disksButtonsAdapter.notifyDataSetChanged();
+    }
 }
