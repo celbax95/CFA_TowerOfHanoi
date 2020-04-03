@@ -9,14 +9,18 @@
         android:layout_height="wrap_content">
 
         <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="8dp"
-            android:src="@drawable/emoji_settings"
+            android:id="@+id/scores_button_back"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_leftarrow"
             android:scaleType="fitCenter"
-            android:padding="10dp"
-            android:background="@drawable/shape_menu_button_round"/>
+            android:paddingVertical="8dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="5dp"
+            android:background="@drawable/shape_menu_button_round"
+            />
 
         <TextView
             android:id="@+id/textView"
@@ -24,7 +28,7 @@
             android:layout_height="wrap_content"
 
 
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="70dp"
             android:gravity="center_horizontal"
             android:text="SCORES"
             android:fontFamily="@font/zorque"

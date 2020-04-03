@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ public class FragmentScores extends Fragment {
     MainActivity context;
 
     ListView listDisksButtons;
+    ImageButton backButton;
 
     public FragmentScores(MainActivity context) {
         this.context = context;
@@ -32,7 +34,24 @@ public class FragmentScores extends Fragment {
 
         createListDisksButtons(v);
 
+        createBackButton(v);
+
         return v;
+    }
+
+    private void createBackButton(View v) {
+        backButton = v.findViewById(R.id.scores_button_back);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.getSupportFragmentManager().beginTransaction()
+                        .hide(FragmentScores.this)
+                        .show(context.getMenuFragment())
+                        .commit();
+            }
+        });
+
     }
 
     private void createListDisksButtons(View v) {
