@@ -12,7 +12,7 @@
 
         <item name="color_menu_button_background">#C0C0C0</item>
         <item name="color_menu_button_background_pressed">#D5D5D5</item>
-        <item name="color_menu_button_text">#fff</item>
+        <item name="color_menu_button_text">#333</item>
     </style>
 
     <style name="DarkTheme" parent="AppTheme">
@@ -22,7 +22,7 @@
 
         <item name="color_menu_button_background">#646464</item>
         <item name="color_menu_button_background_pressed">#808080</item>
-        <item name="color_menu_button_text">#000</item>
+        <item name="color_menu_button_text">#cccccc</item>
     </style>
 
 </resources>

@@ -2,9 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="?attr/color_background"
-    >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,22 +15,22 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentEnd="true"
-            android:scaleType="centerInside"
-            android:padding="10dp"
-            android:src="@drawable/emoji_sun"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="5dp"
-            android:background="@drawable/shape_menu_button_round"/>
+            android:background="@drawable/shape_menu_button_round"
+            android:padding="10dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/emoji_sun" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
             android:fontFamily="@font/zorque"
             android:gravity="center_horizontal"
             android:lineSpacingExtra="20dp"
             android:text="@string/menu_text_title"
-            android:layout_marginTop="75dp"
             android:textColor="?attr/color_title"
             android:textSize="48sp" />
     </RelativeLayout>
@@ -39,39 +38,39 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        >
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/menu_button_play"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="250dp"
                 android:layout_height="75dp"
-                android:text="@string/menu_button_play"
-                android:textStyle="bold"
-                android:textSize="21sp"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/shape_menu_button_roundmedium"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                />
+                android:text="@string/menu_button_play"
+                android:textColor="?attr/color_menu_button_text"
+                android:textSize="21sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/menu_button_scores"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="200dp"
                 android:layout_height="70dp"
-                android:text="@string/menu_button_scores"
-                android:textStyle="bold"
-                android:textSize="17sp"
-                android:layout_marginTop="30dp"
-                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_gravity="center"
-                android:background="@drawable/shape_menu_button_roundmedium"/>
+                android:layout_marginTop="30dp"
+                android:background="@drawable/shape_menu_button_roundmedium"
+                android:text="@string/menu_button_scores"
+                android:textColor="?attr/color_menu_button_text"
+                android:textSize="17sp"
+                android:textStyle="bold" />
             />
 
         </LinearLayout>
@@ -82,12 +81,12 @@
             android:layout_height="60dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:src="@drawable/emoji_settings"
-            android:scaleType="fitCenter"
-            android:padding="10dp"
-            android:background="@drawable/shape_menu_button_round"
+            android:layout_marginEnd="15dp"
             android:layout_marginBottom="40dp"
-            android:layout_marginEnd="15dp"/>
+            android:background="@drawable/shape_menu_button_round"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/emoji_settings" />
 
     </RelativeLayout>
 
