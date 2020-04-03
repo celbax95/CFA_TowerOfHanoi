@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/emoji_settings"
+            android:scaleType="fitCenter"
+            android:padding="10dp"
+            android:background="@drawable/shape_menu_button_round"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+
+            android:layout_marginTop="50dp"
+            android:gravity="center_horizontal"
+            android:text="SCORES"
+            android:fontFamily="@font/zorque"
+            android:textSize="50sp" />
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/scores_listView_disksButtons"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"/>
+
+</LinearLayout>
