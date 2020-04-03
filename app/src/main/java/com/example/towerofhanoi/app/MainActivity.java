@@ -1,7 +1,6 @@
 package com.example.towerofhanoi.app;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
@@ -21,13 +20,10 @@ public class MainActivity extends AppCompatActivity {
 
     private InitApplication initApplication;
 
-
     public void toggleNightMode() {
-        if (InitApplication.getInstance(this).isNightModeEnabled()) {
-            InitApplication.getInstance(this).setIsNightModeEnabled(false);
-        } else {
-            InitApplication.getInstance(this).setIsNightModeEnabled(true);
-        }
+
+        initApplication.setNightModeEnabled(!initApplication.isNightModeEnabled());
+
         getSupportFragmentManager().beginTransaction().hide(menuFragment).commit();
 
         Intent intent = getIntent();
@@ -42,14 +38,18 @@ public class MainActivity extends AppCompatActivity {
         // Transition entre les activités
         overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
 
-        // NightMode
-        AppCompatDelegate.setDefaultNightMode(initApplication.isNightModeEnabled()?
-                AppCompatDelegate.MODE_NIGHT_YES:AppCompatDelegate.MODE_NIGHT_NO);
-
         // Fullscreen
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        // NightMode
+        if (initApplication.isNightModeEnabled()) {
+            setTheme(R.style.DarkTheme);
+        } else {
+            setTheme(R.style.LightTheme);
+        }
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         menuFragment = new FragmentMenu(this);

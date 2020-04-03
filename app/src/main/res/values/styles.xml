@@ -5,4 +5,24 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="LightTheme" parent="AppTheme">
+        <item name="color_title">#333</item>
+        <item name="color_background">#ddd</item>
+        <item name="color_text">#333</item>
+
+        <item name="color_menu_button_background">#C0C0C0</item>
+        <item name="color_menu_button_background_pressed">#D5D5D5</item>
+        <item name="color_menu_button_text">#fff</item>
+    </style>
+
+    <style name="DarkTheme" parent="AppTheme">
+        <item name="color_title">#cccccc</item>
+        <item name="color_background">#222</item>
+        <item name="color_text">#cccccc</item>
+
+        <item name="color_menu_button_background">#646464</item>
+        <item name="color_menu_button_background_pressed">#808080</item>
+        <item name="color_menu_button_text">#000</item>
+    </style>
+
 </resources>

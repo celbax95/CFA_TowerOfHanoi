@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="color_title" format="color"/>
+    <attr name="color_background" format="color"/>
+    <attr name="color_text" format="color"/>
+
+    <attr name="color_menu_button_background" format="color"/>
+    <attr name="color_menu_button_background_pressed" format="color"/>
+    <attr name="color_menu_button_text" format="color"/>
+</resources>

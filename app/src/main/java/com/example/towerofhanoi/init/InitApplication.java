@@ -39,7 +39,7 @@ public class InitApplication extends Application {
         return nightModeEnabled;
     }
 
-    public void setIsNightModeEnabled(boolean nightModeEnabled) {
+    public void setNightModeEnabled(boolean nightModeEnabled) {
         this.nightModeEnabled = nightModeEnabled;
 
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
