@@ -1,34 +1,77 @@
 package com.example.towerofhanoi.app;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+
 import com.example.towerofhanoi.R;
+import com.example.towerofhanoi.fragment.Fragment;
 import com.example.towerofhanoi.fragment.FragmentMenu;
 import com.example.towerofhanoi.fragment.FragmentScores;
 import com.example.towerofhanoi.init.InitApplication;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
-    private FragmentMenu menuFragment;
-    private FragmentScores scoresFragment;
+public class MainActivity extends AppCompatActivity implements com.example.towerofhanoi.app.FragmentManager {
+
+    private HashMap<String, Fragment> fragments;
+
+    private Fragment currentFragment;
 
     private InitApplication initApplication;
 
-    public void toggleNightMode() {
+    private static void debug(String msg) {
+        Log.d("AAAAAAAAAAAAA", msg);
+    }
 
+    public MainActivity() {
+        currentFragment = null;
+        fragments = new HashMap<>();
+    }
+
+    @Override
+    public void onBackPressed() {
+        boolean relayBack = true;
+
+        if (currentFragment != null) {
+            relayBack = currentFragment.onBackPressed();
+        }
+
+        Log.d("BAAAAAAAAAAACK", String.valueOf(relayBack));
+
+        if (relayBack) {
+            super.onBackPressed();
+        }
+    }
+
+    public void toggleNightMode() {
         initApplication.setNightModeEnabled(!initApplication.isNightModeEnabled());
 
-        getSupportFragmentManager().beginTransaction().hide(menuFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(currentFragment).commit();
 
         Intent intent = getIntent();
         finish();
         startActivity(intent);
+    }
+
+    private void addFragment(Fragment f) {
+        fragments.put(f.getName().toLowerCase(), f);
+        getSupportFragmentManager().beginTransaction().add(R.id.mainFrame, f).hide(f).commit();
+    }
+
+    private void initFragments() {
+        addFragment(new FragmentMenu(this, this,  MENU));
+        addFragment(new FragmentScores(this, this, SCORES));
+
+        setFragment(MENU);
     }
 
     @Override
@@ -50,28 +93,35 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
+        initFragments();
+
         setContentView(R.layout.activity_main);
-
-        menuFragment = new FragmentMenu(this);
-        scoresFragment = new FragmentScores(this);
-
-        // Passage au fragment
-        FragmentManager fm = getSupportFragmentManager();
-
-        getSupportFragmentManager().beginTransaction().add(R.id.mainFrame, scoresFragment).hide(scoresFragment).commit();
-
-        getSupportFragmentManager().beginTransaction().add(R.id.mainFrame, menuFragment).commit();
     }
 
-    public FragmentMenu getMenuFragment() {
-        return menuFragment;
+    @Override
+    public void setFragment(String s) {
+        Fragment newFragment = fragments.get(s.toLowerCase());
+
+        if (newFragment != null) {
+            if (currentFragment != null) {
+                getSupportFragmentManager().beginTransaction().hide(currentFragment).show(newFragment).commit();
+            } else {
+                getSupportFragmentManager().beginTransaction().show(newFragment).commit();
+            }
+            currentFragment = newFragment;
+        }
     }
 
-    public FragmentScores getScoresFragment() {
-        return scoresFragment;
-    }
+    @Override
+    public List<String> getFragments() {
+        List<String> fragmentKeys = new ArrayList<>();
 
-    private static void debug(String msg) {
-        Log.d("AAAAAAAAAAAAA", msg);
+        Iterator<String> keys = fragments.keySet().iterator();
+
+        while (keys.hasNext()) {
+            fragmentKeys.add(keys.next());
+        }
+
+        return fragmentKeys;
     }
 }

@@ -9,20 +9,28 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.example.towerofhanoi.R;
+import com.example.towerofhanoi.app.FragmentManager;
 import com.example.towerofhanoi.app.MainActivity;
 
 public class FragmentScores extends Fragment {
 
-    MainActivity context;
+    private static final String NAME = "SCORES";
 
     ListView listDisksButtons;
     ImageButton backButton;
 
-    public FragmentScores(MainActivity context) {
-        this.context = context;
+    public FragmentScores(MainActivity context, FragmentManager fragmentManager, String name) {
+        super(context, fragmentManager,name);
+    }
+
+    @Override
+    public boolean onBackPressed() {
+
+        fragmentManager.setFragment(FragmentManager.MENU);
+
+        return false;
     }
 
     @Nullable
@@ -45,10 +53,7 @@ public class FragmentScores extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.getSupportFragmentManager().beginTransaction()
-                        .hide(FragmentScores.this)
-                        .show(context.getMenuFragment())
-                        .commit();
+                fragmentManager.setFragment(FragmentManager.MENU);
             }
         });
 

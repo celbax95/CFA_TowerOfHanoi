@@ -12,22 +12,20 @@ import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.example.towerofhanoi.R;
+import com.example.towerofhanoi.app.FragmentManager;
 import com.example.towerofhanoi.app.MainActivity;
 import com.example.towerofhanoi.init.InitApplication;
 
 public class FragmentMenu extends Fragment {
 
-    MainActivity context;
-
     ImageButton darkLightModeButton;
 
     Button scoresButton;
 
-    public FragmentMenu(MainActivity context) {
-        this.context = context;
+    public FragmentMenu(MainActivity context, FragmentManager fragmentManager, String name) {
+        super(context, fragmentManager, name);
     }
 
     @Override
@@ -54,12 +52,7 @@ public class FragmentMenu extends Fragment {
         scoresButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("SCORES", "scoreCLICK");
-
-                context.getSupportFragmentManager().beginTransaction()
-                        .hide(context.getMenuFragment())
-                        .show(context.getScoresFragment())
-                        .commit();
+                fragmentManager.setFragment("scores");
             }
         });
 
@@ -77,7 +70,7 @@ public class FragmentMenu extends Fragment {
         darkLightModeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.toggleNightMode();
+                fragmentManager.toggleNightMode();
             }
         });
     }
