@@ -1,22 +1,23 @@
 package com.example.towerofhanoi.app;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
 
 import com.example.towerofhanoi.R;
 import com.example.towerofhanoi.fragment.FragmentMenu;
+import com.example.towerofhanoi.fragment.FragmentScores;
 import com.example.towerofhanoi.init.InitApplication;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FragmentMenu menu;
+    private FragmentMenu menuFragment;
+    private FragmentScores scoresFragment;
 
     private InitApplication initApplication;
 
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             InitApplication.getInstance(this).setIsNightModeEnabled(true);
         }
-        getSupportFragmentManager().beginTransaction().hide(menu).commit();
+        getSupportFragmentManager().beginTransaction().hide(menuFragment).commit();
 
         Intent intent = getIntent();
         finish();
@@ -51,10 +52,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        menu = new FragmentMenu(this);
+        menuFragment = new FragmentMenu(this);
+        scoresFragment = new FragmentScores(this);
 
         // Passage au fragment
-        getSupportFragmentManager().beginTransaction().add(R.id.mainFrame, menu).commit();
+        FragmentManager fm = getSupportFragmentManager();
+
+        getSupportFragmentManager().beginTransaction().add(R.id.mainFrame, scoresFragment).hide(scoresFragment).commit();
+
+        getSupportFragmentManager().beginTransaction().add(R.id.mainFrame, menuFragment).commit();
+    }
+
+    public FragmentMenu getMenuFragment() {
+        return menuFragment;
+    }
+
+    public FragmentScores getScoresFragment() {
+        return scoresFragment;
     }
 
     private static void debug(String msg) {

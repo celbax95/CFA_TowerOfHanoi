@@ -3,9 +3,11 @@ package com.example.towerofhanoi.fragment;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
@@ -21,6 +23,8 @@ public class FragmentMenu extends Fragment {
     MainActivity context;
 
     ImageButton darkLightModeButton;
+
+    Button scoresButton;
 
     public FragmentMenu(MainActivity context) {
         this.context = context;
@@ -40,7 +44,25 @@ public class FragmentMenu extends Fragment {
 
         createDarkLightModeButton(v);
 
+        createScoresButton(v);
+
         return v;
+    }
+
+    private void createScoresButton(View v) {
+        scoresButton = v.findViewById(R.id.menu_button_scores);
+        scoresButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("SCORES", "scoreCLICK");
+
+                context.getSupportFragmentManager().beginTransaction()
+                        .hide(context.getMenuFragment())
+                        .show(context.getScoresFragment())
+                        .commit();
+            }
+        });
+
     }
 
     private void createDarkLightModeButton(View v) {

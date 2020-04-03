@@ -47,6 +47,7 @@
             android:layout_centerHorizontal="true">
 
             <Button
+                android:id="@+id/menu_button_play"
                 android:layout_width="250dp"
                 android:layout_height="75dp"
                 android:text="@string/menu_button_play"
@@ -59,6 +60,7 @@
                 />
 
             <Button
+                android:id="@+id/menu_button_scores"
                 android:layout_width="200dp"
                 android:layout_height="70dp"
                 android:text="@string/menu_button_scores"
@@ -73,6 +75,7 @@
         </LinearLayout>
 
         <ImageButton
+            android:id="@+id/menu_button_options"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentEnd="true"

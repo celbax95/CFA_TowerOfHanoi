@@ -19,6 +19,10 @@ public class FragmentScores extends Fragment {
 
     ListView listDisksButtons;
 
+    public FragmentScores(MainActivity context) {
+        this.context = context;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
