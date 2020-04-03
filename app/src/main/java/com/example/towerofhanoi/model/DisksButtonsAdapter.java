@@ -10,10 +10,23 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.towerofhanoi.R;
 
-public class DisksButtonsAdapter extends BaseAdapter {
+public class DisksButtonsAdapter extends RecyclerView.Adapter<DisksButtonsAdapter.MyViewHolder> {
 
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        // each data item is just a string in this case
+        public Button diskButton;
+        public MyViewHolder(View v) {
+            super(v);
+
+            diskButton = (Button) v;
+        }
+    }
+    
     private Context context;
     private int maxDisks;
 
@@ -22,14 +35,17 @@ public class DisksButtonsAdapter extends BaseAdapter {
         this.context = context;
     }
 
+    @NonNull
     @Override
-    public int getCount() {
-        return maxDisks;
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_scores_disksbutton, parent, false);
+
+        return new MyViewHolder(view);
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        holder.diskButton.setText(String.valueOf(position+1));
     }
 
     @Override
@@ -38,16 +54,7 @@ public class DisksButtonsAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        assert inflater != null;
-        @SuppressLint({"ViewHolder", "InflateParams"})
-        View rowView = inflater.inflate(R.layout.item_scores_disksbutton, null);
-
-        Button buttonText = rowView.findViewById(R.id.item_scores_disksButton);
-        buttonText.setText(String.valueOf(getItemId(position)));
-
-        return rowView;
+    public int getItemCount() {
+        return maxDisks;
     }
 }

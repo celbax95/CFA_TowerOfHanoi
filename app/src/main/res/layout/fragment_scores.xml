@@ -35,9 +35,10 @@
 
     </RelativeLayout>
 
-    <ListView
+    <view class="androidx.recyclerview.widget.RecyclerView"
         android:id="@+id/scores_listView_disksButtons"
         android:layout_width="match_parent"
-        android:layout_height="80dp"/>
+        android:layout_height="80dp"
+        />
 
 </LinearLayout>

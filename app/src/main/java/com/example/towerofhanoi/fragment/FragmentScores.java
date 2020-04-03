@@ -10,6 +10,8 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.towerofhanoi.R;
 import com.example.towerofhanoi.app.FragmentManager;
@@ -20,7 +22,7 @@ public class FragmentScores extends Fragment {
 
     private static final String NAME = "SCORES";
 
-    ListView listDisksButtons;
+    RecyclerView listDisksButtons;
 
     public FragmentScores(MainActivity context, FragmentManager fragmentManager, String name) {
         super(context, fragmentManager,name);
@@ -57,22 +59,16 @@ public class FragmentScores extends Fragment {
                 fragmentManager.setFragment(FragmentManager.MENU);
             }
         });
-
     }
 
     private void createListDisksButtons(View v) {
         listDisksButtons = v.findViewById(R.id.scores_listView_disksButtons);
 
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        listDisksButtons.setLayoutManager(layoutManager);
+
         DisksButtonsAdapter disksButtonsAdapter = new DisksButtonsAdapter(context, 3);
-
         listDisksButtons.setAdapter(disksButtonsAdapter);
-
-        listDisksButtons.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            }
-        });
-
         disksButtonsAdapter.notifyDataSetChanged();
     }
 }
