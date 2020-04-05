@@ -14,6 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.towerofhanoi.R;
+import com.example.towerofhanoi.repository.Settings;
+
+import java.util.ArrayList;
 
 public class DisksButtonsAdapter extends RecyclerView.Adapter<DisksButtonsAdapter.MyViewHolder> {
 
@@ -26,13 +29,16 @@ public class DisksButtonsAdapter extends RecyclerView.Adapter<DisksButtonsAdapte
             diskButton = (Button) v;
         }
     }
-    
+
     private Context context;
     private int maxDisks;
+
+    private int selected;
 
     public DisksButtonsAdapter(Context context, int maxDisks) {
         this.maxDisks = maxDisks;
         this.context = context;
+        selected = Settings.getInstance(context).getDisksNumber();
     }
 
     @NonNull
@@ -43,9 +49,33 @@ public class DisksButtonsAdapter extends RecyclerView.Adapter<DisksButtonsAdapte
         return new MyViewHolder(view);
     }
 
+    public int getSelected() {
+        return selected;
+    }
+
+    public void setSelected(int selected) {
+        this.selected = selected;
+    }
+
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.diskButton.setText(String.valueOf(position+1));
+
+        final int disksNumber = position+1;
+
+        if (selected == disksNumber) {
+            holder.diskButton.setSelected(true);
+        } else {
+            holder.diskButton.setSelected(false);
+        }
+
+        holder.diskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DisksButtonsAdapter.this.setSelected(disksNumber);
+                DisksButtonsAdapter.this.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override

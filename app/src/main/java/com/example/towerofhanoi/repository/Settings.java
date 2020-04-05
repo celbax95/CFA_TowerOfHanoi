@@ -46,7 +46,4 @@ public class Settings {
 
         return instance;
     }
-
-    SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-    SharedPreferences.Editor editor = mPrefs.edit();
 }
