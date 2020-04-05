@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_line_bottom"
+    android:paddingVertical="5dp">
+
+    <TextView
+        android:id="@+id/item_scores_position"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:paddingStart="20dp"
+        android:text=" 5" />
+
+    <TextView
+        android:id="@+id/item_scores_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:paddingHorizontal="5dp"
+        android:text="11:19 05/04/2020" />
+
+    <TextView
+        android:id="@+id/item_scores_moves"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:paddingHorizontal="5dp"
+        android:text="9999" />
+
+    <TextView
+        android:id="@+id/item_scores_time"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:paddingHorizontal="5dp"
+        android:text="1:99:48" />
+
+</LinearLayout>

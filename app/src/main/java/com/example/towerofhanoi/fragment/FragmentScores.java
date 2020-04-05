@@ -67,7 +67,7 @@ public class FragmentScores extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         listDisksButtons.setLayoutManager(layoutManager);
 
-        DisksButtonsAdapter disksButtonsAdapter = new DisksButtonsAdapter(context, 3);
+        DisksButtonsAdapter disksButtonsAdapter = new DisksButtonsAdapter(context, 10);
         listDisksButtons.setAdapter(disksButtonsAdapter);
         disksButtonsAdapter.notifyDataSetChanged();
     }

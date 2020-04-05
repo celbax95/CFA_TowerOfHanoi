@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -12,33 +12,108 @@
             android:id="@+id/scores_button_back"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
-            android:src="@drawable/ic_leftarrow"
-            android:scaleType="fitCenter"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/shape_menu_button_round"
             android:paddingVertical="8dp"
             android:paddingStart="0dp"
             android:paddingEnd="5dp"
-            android:background="@drawable/shape_menu_button_round"
-            />
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_leftarrow" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="70dp"
+            android:fontFamily="@font/zorque"
             android:gravity="center_horizontal"
             android:text="SCORES"
             android:textColor="?attr/color_title"
-            android:fontFamily="@font/zorque"
             android:textSize="50sp" />
 
     </RelativeLayout>
 
-    <view class="androidx.recyclerview.widget.RecyclerView"
-        android:id="@+id/scores_listView_disksButtons"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
+            android:gravity="center"
+            android:text="Number of disks"
+            android:layout_marginTop="30dp"
+            android:textSize="19sp"
+            android:background="@drawable/shape_line_top"/>
+
+        <view
+            android:id="@+id/scores_listView_disksButtons"
+            class="androidx.recyclerview.widget.RecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:background="@drawable/shape_line_bottom"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="Position"
+                android:textSize="12dp"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="Date"
+                android:textSize="12dp" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="Moves"
+                android:textSize="12dp" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="Time"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+
+        <!--    <ListView-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="match_parent">-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <include layout="@layout/item_scores"/>
+            <include layout="@layout/item_scores"/>
+            <include layout="@layout/item_scores"/>
+            <include layout="@layout/item_scores"/>
+        </LinearLayout>
+
+        <!--    </ListView>-->
+
+    </LinearLayout>
+
 
 </LinearLayout>
