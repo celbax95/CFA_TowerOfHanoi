@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -19,6 +19,7 @@ import com.example.towerofhanoi.app.MainActivity;
 import com.example.towerofhanoi.model.DisksButtonsAdapter;
 import com.example.towerofhanoi.model.Score;
 import com.example.towerofhanoi.model.ScoresAdapter;
+import com.example.towerofhanoi.repository.ScoresRepository;
 
 import java.util.ArrayList;
 
@@ -26,10 +27,14 @@ public class FragmentScores extends Fragment {
 
     private static final String NAME = "SCORES";
 
-    ScoresAdapter scoresAdapter;
+    private ScoresAdapter scoresAdapter;
+
+    private ScoresRepository scoresRepository;
 
     public FragmentScores(MainActivity context, FragmentManager fragmentManager, String name) {
         super(context, fragmentManager,name);
+
+        scoresRepository = ScoresRepository.getInstance(context);
     }
 
     @Override
@@ -47,16 +52,53 @@ public class FragmentScores extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_scores, null);
 
-        createListDisksButtons(v);
+        initListDisksButtons(v);
 
-        createBackButton(v);
+        initBackButton(v);
 
-        createListScores(v);
+        initListScores(v);
+
+        initDateButton(v);
+        initMovesButton(v);
+        initTimeButton(v);
 
         return v;
     }
 
-    private void createListScores(View v) {
+    private void initTimeButton(View v) {
+        Button timeBtn = v.findViewById(R.id.scores_button_time);
+
+        timeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scoresAdapter.setScores(scoresRepository.getOrderedByTime(1));
+            }
+        });
+    }
+
+    private void initMovesButton(View v) {
+        Button movesBtn = v.findViewById(R.id.scores_button_moves);
+
+        movesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scoresAdapter.setScores(scoresRepository.getOrderedByMoves(1));
+            }
+        });
+    }
+
+    private void initDateButton(View v) {
+        Button dateBtn = v.findViewById(R.id.scores_button_date);
+
+        dateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scoresAdapter.setScores(scoresRepository.getOrderedByDate(1));
+            }
+        });
+    }
+
+    private void initListScores(View v) {
         scoresAdapter = new ScoresAdapter(context);
 
         ListView scores = v.findViewById(R.id.scores_listView_scores);
@@ -78,7 +120,7 @@ public class FragmentScores extends Fragment {
         scoresAdapter.notifyDataSetChanged();
     }
 
-    private void createBackButton(View v) {
+    private void initBackButton(View v) {
         ImageButton backButton = v.findViewById(R.id.scores_button_back);
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +131,7 @@ public class FragmentScores extends Fragment {
         });
     }
 
-    private void createListDisksButtons(View v) {
+    private void initListDisksButtons(View v) {
         RecyclerView listDisksButtons = v.findViewById(R.id.scores_listView_disksButtons);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
