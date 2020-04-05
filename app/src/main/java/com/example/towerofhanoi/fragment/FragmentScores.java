@@ -68,6 +68,11 @@ public class FragmentScores extends Fragment {
         s.add(new Score(System.currentTimeMillis(), 1 , 785, 654268428561L));
         s.add(new Score(System.currentTimeMillis(), 1 , 786578, 56416161561982L));
         s.add(new Score(System.currentTimeMillis(), 1 , 93, 652498494L));
+        s.add(new Score(System.currentTimeMillis(), 1 , 93, 652498494L));
+        s.add(new Score(System.currentTimeMillis(), 1 , 93, 652498494L));
+        s.add(new Score(System.currentTimeMillis(), 1 , 93, 652498494L));
+        s.add(new Score(System.currentTimeMillis(), 1 , 93, 652498494L));
+        s.add(new Score(System.currentTimeMillis(), 1 , 93, 652498494L));
 
         scoresAdapter.setScores(s);
         scoresAdapter.notifyDataSetChanged();

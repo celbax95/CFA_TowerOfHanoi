@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.towerofhanoi.R;
@@ -34,7 +35,7 @@ public class ScoresAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return scores.size();
+        return scores.size() +1;
     }
 
     @Override
@@ -51,14 +52,28 @@ public class ScoresAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        Score s = scores.get(position);
+        if (position < scores.size()) {
 
-        View v = inflater.inflate(R.layout.item_scores, null);
+            Score s = scores.get(position);
 
-        ((TextView) v.findViewById(R.id.item_scores_date)).setText(s.getDateString());
-        ((TextView) v.findViewById(R.id.item_scores_time)).setText(s.getTimeString());
-        ((TextView) v.findViewById(R.id.item_scores_moves)).setText(String.valueOf(s.getMoves()));
+            View v = inflater.inflate(R.layout.item_scores, null);
 
-        return v;
+            LinearLayout itemLayout = ((LinearLayout)v.findViewById(R.id.item_scores_layout));
+
+            if (position == 0) {
+                itemLayout.setBackground(null);
+            }
+
+            ((TextView) v.findViewById(R.id.item_scores_date)).setText(s.getDateString());
+            ((TextView) v.findViewById(R.id.item_scores_time)).setText(s.getTimeString());
+            ((TextView) v.findViewById(R.id.item_scores_moves)).setText(String.valueOf(s.getMoves()));
+
+            return v;
+        } else {
+            View v = inflater.inflate(R.layout.empty_layout_40dp, null);
+
+
+            return v;
+        }
     }
 }

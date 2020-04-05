@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_scores_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/shape_line_bottom"
+    android:background="@drawable/shape_line_top"
     android:paddingVertical="5dp">
 
     <TextView
         android:id="@+id/item_scores_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="5"
+        android:layout_weight="1"
         android:fontFamily="monospace"
         android:gravity="center"
         android:paddingHorizontal="5dp"
+        android:textColor="?attr/color_text"
         android:text="11:19 05/04/2020" />
 
     <TextView
         android:id="@+id/item_scores_moves"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="1"
         android:fontFamily="monospace"
         android:gravity="center"
         android:paddingHorizontal="5dp"
+        android:textColor="?attr/color_text"
         android:text="9999" />
 
     <TextView
         android:id="@+id/item_scores_time"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="1"
         android:fontFamily="monospace"
         android:gravity="center"
         android:paddingHorizontal="5dp"
+        android:textColor="?attr/color_text"
         android:text="1:99:48" />
 
 </LinearLayout>
