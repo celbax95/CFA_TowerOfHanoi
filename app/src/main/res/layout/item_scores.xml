@@ -6,16 +6,6 @@
     android:paddingVertical="5dp">
 
     <TextView
-        android:id="@+id/item_scores_position"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:fontFamily="monospace"
-        android:gravity="center"
-        android:paddingStart="20dp"
-        android:text=" 5" />
-
-    <TextView
         android:id="@+id/item_scores_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

@@ -17,7 +17,7 @@ public class Score {
     private long date;
     private int disks;
     private int moves;
-    private int time;
+    private long time;
 
     public Score() {
         date = System.currentTimeMillis();
@@ -39,6 +39,13 @@ public class Score {
         int mSeconds = calendar.get(Calendar.SECOND);
 
         return String.format("%d:%d:%d\n%d/%d/%d", mHour, mMinutes, mSeconds, mDay, mMonth, mYear);
+    }
+
+    public Score(long date, int disks, int moves, long time) {
+        this.date = date;
+        this.disks = disks;
+        this.moves = moves;
+        this.time = time;
     }
 
     public String getTimeString() {
@@ -79,11 +86,11 @@ public class Score {
         this.moves = moves;
     }
 
-    public int getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(long time) {
         this.time = time;
     }
 }

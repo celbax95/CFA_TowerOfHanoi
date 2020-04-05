@@ -29,10 +29,10 @@ public class DataBaseManager extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE SCORES (" +
-                "date DATE," +
+                "date BIGINT," +
                 "disks INTEGER," +
                 "moves INTEGER," +
-                "time INTEGER);");
+                "time BIGINT);");
     }
 
     @Override

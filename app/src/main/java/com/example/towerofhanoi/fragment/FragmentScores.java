@@ -17,12 +17,16 @@ import com.example.towerofhanoi.R;
 import com.example.towerofhanoi.app.FragmentManager;
 import com.example.towerofhanoi.app.MainActivity;
 import com.example.towerofhanoi.model.DisksButtonsAdapter;
+import com.example.towerofhanoi.model.Score;
+import com.example.towerofhanoi.model.ScoresAdapter;
+
+import java.util.ArrayList;
 
 public class FragmentScores extends Fragment {
 
     private static final String NAME = "SCORES";
 
-    RecyclerView listDisksButtons;
+    ScoresAdapter scoresAdapter;
 
     public FragmentScores(MainActivity context, FragmentManager fragmentManager, String name) {
         super(context, fragmentManager,name);
@@ -47,7 +51,26 @@ public class FragmentScores extends Fragment {
 
         createBackButton(v);
 
+        createListScores(v);
+
         return v;
+    }
+
+    private void createListScores(View v) {
+        scoresAdapter = new ScoresAdapter(context);
+
+        ListView scores = v.findViewById(R.id.scores_listView_scores);
+        scores.setAdapter(scoresAdapter);
+
+        ArrayList<Score> s = new ArrayList<Score>();
+        s.add(new Score(System.currentTimeMillis(), 1 , 50, 56416161561982L));
+        s.add(new Score(System.currentTimeMillis(), 1 , 7587, 654284L));
+        s.add(new Score(System.currentTimeMillis(), 1 , 785, 654268428561L));
+        s.add(new Score(System.currentTimeMillis(), 1 , 786578, 56416161561982L));
+        s.add(new Score(System.currentTimeMillis(), 1 , 93, 652498494L));
+
+        scoresAdapter.setScores(s);
+        scoresAdapter.notifyDataSetChanged();
     }
 
     private void createBackButton(View v) {
@@ -62,7 +85,7 @@ public class FragmentScores extends Fragment {
     }
 
     private void createListDisksButtons(View v) {
-        listDisksButtons = v.findViewById(R.id.scores_listView_disksButtons);
+        RecyclerView listDisksButtons = v.findViewById(R.id.scores_listView_disksButtons);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         listDisksButtons.setLayoutManager(layoutManager);
