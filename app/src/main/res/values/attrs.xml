@@ -7,4 +7,6 @@
     <attr name="color_menu_button_background" format="color"/>
     <attr name="color_menu_button_background_pressed" format="color"/>
     <attr name="color_menu_button_text" format="color"/>
+
+    <attr name="color_game_background" format="color"/>
 </resources>

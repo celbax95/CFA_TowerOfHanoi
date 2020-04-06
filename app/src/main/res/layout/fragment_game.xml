@@ -1,39 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/game_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/color_background"
     android:orientation="vertical">
 
+    <ImageButton
+        android:id="@+id/game_button_back"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/shape_menu_button_round"
+        android:paddingVertical="8dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_leftarrow" />
+
     <LinearLayout
-        android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/blue"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#002"
-            android:orientation="horizontal"></LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"/>
 
         <LinearLayout
-            android:id="@+id/red"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#400"
-            android:orientation="horizontal"></LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:background="?attr/color_game_background">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shape_game_bar"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginTop="150dp">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_game_bar"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginTop="150dp"
+                android:layout_weight="1">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_game_bar"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginTop="150dp"
+                android:layout_weight="1">
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:orientation="vertical"
+                android:paddingTop="50dp"
+                tools:ignore="NestedWeights">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:gravity="center_horizontal"
+                    android:text="Time"
+                    android:textColor="?attr/color_text"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="999"
+                    android:textColor="?attr/color_text"
+                    android:textSize="25sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingTop="130dp">
+
+                <ImageButton
+                    android:id="@+id/game_button_reset"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/reset_game"
+                    android:scaleType="fitCenter"
+                    android:background="@drawable/shape_menu_button_round"
+                    android:padding="8dp"
+                    android:tint="?attr/color_text"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:orientation="vertical"
+                android:paddingTop="50dp"
+                tools:ignore="NestedWeights">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:gravity="center_horizontal"
+                    android:text="Moves"
+                    android:textColor="?attr/color_text"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="999"
+                    android:textColor="?attr/color_text"
+                    android:textSize="25sp" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/drag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="COUCOU" />
 
 </FrameLayout>

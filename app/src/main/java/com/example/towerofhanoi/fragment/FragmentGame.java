@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,11 +29,8 @@ import com.example.towerofhanoi.app.FragmentManager;
 
 public class FragmentGame extends Fragment {
 
-    private int on;
-
     public FragmentGame(Context context, FragmentManager fragmentManager, String name) {
         super(context, fragmentManager, name);
-        on = 1;
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -43,137 +41,19 @@ public class FragmentGame extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_game, null);
 
-        final ViewGroup _root = (ViewGroup)v.findViewById(R.id.root);
+        initButtonBack(v);
 
-        final LinearLayout red = v.findViewById(R.id.red);
-        final LinearLayout blue = v.findViewById(R.id.blue);
-
-        final Button b = v.findViewById(R.id.drag);
-
-        red.setOnTouchListener(new View.OnTouchListener() {
-            float dX;
-            float dY;
-
-            boolean onMe = false;
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int lastAction;
-
-                if (on != 2) {
-                    return false;
-                }
-
-                switch (event.getActionMasked()) {
-                    case MotionEvent.ACTION_DOWN:
-                        dX = b.getX() - event.getRawX();
-                        // dY = view.getY() - event.getRawY();
-                        b.setY(100);
-                        lastAction = MotionEvent.ACTION_DOWN;
-                        break;
-
-                    case MotionEvent.ACTION_MOVE:
-                        // view.setY(event.getRawY() + dY);
-                        b.setX(event.getRawX() + dX);
-                        lastAction = MotionEvent.ACTION_MOVE;
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-
-                        float blueXC = blue.getX()+blue.getWidth()/2f;
-                        final float blueYC = blue.getY()+blue.getHeight()/2f;
-
-                        float redXC = red.getX()+red.getWidth()/2f;
-                        final float redYC = red.getY()+red.getHeight()/2f;
-
-                        float distToRed = (float) Math.pow((b.getY()+b.getHeight()/2f) - redYC, 2)
-                                + (float) Math.pow((b.getX()+b.getWidth()/2f) - redXC, 2);
-                        float distToBlue = (float) Math.pow((b.getY()+b.getHeight()/2f) - blueYC, 2)
-                                + (float) Math.pow((b.getX()+b.getWidth()/2f) - blueXC, 2);
-
-                        Log.d(String.valueOf(redYC), String.valueOf(blueYC));
-
-                        if (distToBlue < distToRed) {
-                            b.setX(blueXC-b.getWidth()/2f);
-                            b.setY(blueYC-b.getHeight()/2f);
-                            on = 1;
-
-                        } else {
-                            b.setX(redXC-b.getWidth()/2f);
-                            b.setY(redYC-b.getHeight()/2f);
-                            on = 2;
-                        }
-
-                        break;
-
-                    default:
-                        return false;
-                }
-                return true;
-            }
-        });
-
-        blue.setOnTouchListener(new View.OnTouchListener() {
-            float dX;
-            float dY;
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int lastAction;
-
-                if (on != 1) {
-                    return false;
-                }
-
-                switch (event.getActionMasked()) {
-                    case MotionEvent.ACTION_DOWN:
-                        dX = b.getX() - event.getRawX();
-                        // dY = view.getY() - event.getRawY();
-                        b.setY(100);
-                        lastAction = MotionEvent.ACTION_DOWN;
-                        break;
-
-                    case MotionEvent.ACTION_MOVE:
-                        // view.setY(event.getRawY() + dY);
-                        b.setX(event.getRawX() + dX);
-                        lastAction = MotionEvent.ACTION_MOVE;
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-
-                        float blueXC = blue.getX()+blue.getWidth()/2f;
-                        final float blueYC = blue.getY()+blue.getHeight()/2f;
-
-                        float redXC = red.getX()+red.getWidth()/2f;
-                        final float redYC = red.getY()+red.getHeight()/2f;
-
-                        float distToRed = (float) Math.pow((b.getY()+b.getHeight()/2f) - redYC, 2)
-                                + (float) Math.pow((b.getX()+b.getWidth()/2f) - redXC, 2);
-                        float distToBlue = (float) Math.pow((b.getY()+b.getHeight()/2f) - blueYC, 2)
-                                + (float) Math.pow((b.getX()+b.getWidth()/2f) - blueXC, 2);
-
-                        Log.d(String.valueOf(redYC), String.valueOf(blueYC));
-
-                        if (distToBlue < distToRed) {
-                            b.setX(blueXC-b.getWidth()/2f);
-                            b.setY(blueYC-b.getHeight()/2f);
-                            on = 1;
-
-                        } else {
-                            b.setX(redXC-b.getWidth()/2f);
-                            b.setY(redYC-b.getHeight()/2f);
-                            on = 2;
-                        }
-
-                        break;
-
-                    default:
-                        return false;
-                }
-                return true;
-            }
-        });
         return v;
+    }
+
+    private void initButtonBack(View v) {
+        ImageButton back = v.findViewById(R.id.game_button_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void d(Object o) {

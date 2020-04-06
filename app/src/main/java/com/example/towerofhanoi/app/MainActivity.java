@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements com.example.tower
         addFragment(new FragmentScores(this, this, SCORES));
         addFragment(new FragmentGame(this, this, GAME));
 
-        setFragment(GAME);
+        setFragment(MENU);
     }
 
     @Override
