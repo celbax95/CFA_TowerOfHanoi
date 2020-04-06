@@ -26,13 +26,17 @@ import java.util.ArrayList;
 public class FragmentScores extends Fragment {
 
     private static final String NAME = "SCORES";
+    private Button timeBtn;
+    private Button movesBtn;
+    private Button dateBtn;
+
+    private DisksButtonsAdapter disksButtonsAdapter;
 
     private ScoresAdapter scoresAdapter;
-
     private ScoresRepository scoresRepository;
 
     public FragmentScores(MainActivity context, FragmentManager fragmentManager, String name) {
-        super(context, fragmentManager,name);
+        super(context, fragmentManager, name);
 
         scoresRepository = ScoresRepository.getInstance(context);
     }
@@ -65,35 +69,47 @@ public class FragmentScores extends Fragment {
         return v;
     }
 
+    private void selectOrder(Orderer orderer) {
+        dateBtn.setSelected(orderer == Orderer.DATE);
+        movesBtn.setSelected(orderer == Orderer.MOVES);
+        timeBtn.setSelected(orderer == Orderer.TIME);
+    }
+
     private void initTimeButton(View v) {
-        Button timeBtn = v.findViewById(R.id.scores_button_time);
+        timeBtn = v.findViewById(R.id.scores_button_time);
 
         timeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scoresAdapter.setScores(scoresRepository.getOrderedByTime(1));
+                scoresAdapter.setScores(scoresRepository.getOrderedByTime(disksButtonsAdapter.getSelected()));
+                selectOrder(Orderer.TIME);
+                scoresAdapter.notifyDataSetChanged();
             }
         });
     }
 
     private void initMovesButton(View v) {
-        Button movesBtn = v.findViewById(R.id.scores_button_moves);
+        movesBtn = v.findViewById(R.id.scores_button_moves);
 
         movesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scoresAdapter.setScores(scoresRepository.getOrderedByMoves(1));
+                scoresAdapter.setScores(scoresRepository.getOrderedByMoves(disksButtonsAdapter.getSelected()));
+                selectOrder(Orderer.MOVES);
+                scoresAdapter.notifyDataSetChanged();
             }
         });
     }
 
     private void initDateButton(View v) {
-        Button dateBtn = v.findViewById(R.id.scores_button_date);
+        dateBtn = v.findViewById(R.id.scores_button_date);
 
         dateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scoresAdapter.setScores(scoresRepository.getOrderedByDate(1));
+                scoresAdapter.setScores(scoresRepository.getOrderedByDate(disksButtonsAdapter.getSelected()));
+                selectOrder(Orderer.DATE);
+                scoresAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -105,16 +121,16 @@ public class FragmentScores extends Fragment {
         scores.setAdapter(scoresAdapter);
 
         ArrayList<Score> s = new ArrayList<Score>();
-        s.add(new Score(System.currentTimeMillis(), 1 , 50, 56416161561982L));
-        s.add(new Score(System.currentTimeMillis(), 1 , 7587, 654284L));
-        s.add(new Score(System.currentTimeMillis(), 1 , 785, 654268428561L));
-        s.add(new Score(System.currentTimeMillis(), 1 , 786578, 56416161561982L));
-        s.add(new Score(System.currentTimeMillis(), 1 , 93, 652498494L));
-        s.add(new Score(System.currentTimeMillis(), 1 , 93, 652498494L));
-        s.add(new Score(System.currentTimeMillis(), 1 , 93, 652498494L));
-        s.add(new Score(System.currentTimeMillis(), 1 , 93, 652498494L));
-        s.add(new Score(System.currentTimeMillis(), 1 , 93, 652498494L));
-        s.add(new Score(System.currentTimeMillis(), 1 , 93, 652498494L));
+        s.add(new Score(System.currentTimeMillis(), 1, 50, 56416161561982L));
+        s.add(new Score(System.currentTimeMillis(), 1, 7587, 654284L));
+        s.add(new Score(System.currentTimeMillis(), 1, 785, 654268428561L));
+        s.add(new Score(System.currentTimeMillis(), 1, 786578, 56416161561982L));
+        s.add(new Score(System.currentTimeMillis(), 1, 93, 652498494L));
+        s.add(new Score(System.currentTimeMillis(), 1, 93, 652498494L));
+        s.add(new Score(System.currentTimeMillis(), 1, 93, 652498494L));
+        s.add(new Score(System.currentTimeMillis(), 1, 93, 652498494L));
+        s.add(new Score(System.currentTimeMillis(), 1, 93, 652498494L));
+        s.add(new Score(System.currentTimeMillis(), 1, 93, 652498494L));
 
         scoresAdapter.setScores(s);
         scoresAdapter.notifyDataSetChanged();
@@ -137,8 +153,12 @@ public class FragmentScores extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         listDisksButtons.setLayoutManager(layoutManager);
 
-        DisksButtonsAdapter disksButtonsAdapter = new DisksButtonsAdapter(context, 10);
+        disksButtonsAdapter = new DisksButtonsAdapter(context, 10);
         listDisksButtons.setAdapter(disksButtonsAdapter);
         disksButtonsAdapter.notifyDataSetChanged();
+    }
+
+    private enum Orderer {
+        DATE, MOVES, TIME
     }
 }
