@@ -38,7 +38,7 @@ public class Score {
         int mMinutes = calendar.get(Calendar.MINUTE);
         int mSeconds = calendar.get(Calendar.SECOND);
 
-        return String.format("%d:%d:%d\n%d/%d/%d", mHour, mMinutes, mSeconds, mDay, mMonth, mYear);
+        return String.format("%02d:%02d:%02d\n%02d/%02d/%04d", mHour, mMinutes, mSeconds, mDay, mMonth, mYear);
     }
 
     public Score(long date, int disks, int moves, long time) {
@@ -48,18 +48,39 @@ public class Score {
         this.time = time;
     }
 
+    @SuppressLint("DefaultLocale")
     public String getTimeString() {
         long tmpTime = time;
 
-        int h = (int) Math.floor(tmpTime/GET_H_FROM_MS);
-        tmpTime%=GET_H_FROM_MS;
-        int m = (int) Math.floor(tmpTime/GET_M_FROM_MS);
-        tmpTime%=GET_M_FROM_MS;
-        int s = (int) Math.floor(tmpTime/GET_S_FROM_MS);
-        tmpTime%=GET_S_FROM_MS;
-        int ms = (int) Math.round(tmpTime/MS_PRECISION);
+        String ret = "";
+        boolean firstDone = false;
 
-        return (h==0?"00":h) + ":" + (m==0?"00":m) + ":" + (s==0?"00":s) + ":" + (ms==0?"00":ms);
+
+        int h = (int) Math.floor(tmpTime/GET_H_FROM_MS);
+        if (h != 0) {
+            ret+=(h+":");
+            firstDone = true;
+        }
+        tmpTime%=GET_H_FROM_MS;
+
+        int m = (int) Math.floor(tmpTime/GET_M_FROM_MS);
+        if (m != 0 || firstDone) {
+            ret = String.format(ret+"%02d:", m);
+            firstDone = true;
+        }
+        tmpTime%=GET_M_FROM_MS;
+
+        int s = (int) Math.floor(tmpTime/GET_S_FROM_MS);
+        if (s != 0 || firstDone) {
+            ret = String.format(ret+"%02d:", s);
+            firstDone = true;
+        }
+        tmpTime%=GET_S_FROM_MS;
+
+        int ms = (int) Math.round(tmpTime/MS_PRECISION);
+        ret = String.format(ret+"%02d", ms);
+
+        return ret;
     }
 
     public long getDate() {
