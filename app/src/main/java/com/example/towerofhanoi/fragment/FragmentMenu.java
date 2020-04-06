@@ -42,9 +42,20 @@ public class FragmentMenu extends Fragment {
 
         createDarkLightModeButton(v);
 
+        createPlayButton(v);
         createScoresButton(v);
 
         return v;
+    }
+
+    private void createPlayButton(View v) {
+        Button playButton = v.findViewById(R.id.menu_button_play);
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentManager.setFragment("game");
+            }
+        });
     }
 
     private void createScoresButton(View v) {
@@ -55,7 +66,6 @@ public class FragmentMenu extends Fragment {
                 fragmentManager.setFragment("scores");
             }
         });
-
     }
 
     private void createDarkLightModeButton(View v) {

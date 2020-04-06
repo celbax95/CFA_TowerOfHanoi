@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.towerofhanoi.R;
 import com.example.towerofhanoi.fragment.Fragment;
+import com.example.towerofhanoi.fragment.FragmentGame;
 import com.example.towerofhanoi.fragment.FragmentMenu;
 import com.example.towerofhanoi.fragment.FragmentScores;
 import com.example.towerofhanoi.init.InitApplication;
@@ -70,8 +71,9 @@ public class MainActivity extends AppCompatActivity implements com.example.tower
     private void initFragments() {
         addFragment(new FragmentMenu(this, this,  MENU));
         addFragment(new FragmentScores(this, this, SCORES));
+        addFragment(new FragmentGame(this, this, GAME));
 
-        setFragment(MENU);
+        setFragment(GAME);
     }
 
     @Override
