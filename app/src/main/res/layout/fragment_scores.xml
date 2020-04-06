@@ -73,7 +73,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Date"
-                android:textSize="12dp" />
+                android:minWidth="0dp"
+                android:minHeight="40dp"
+                android:textSize="12dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/shape_menu_button_roundsmall"/>
 
             <Button
                 android:id="@+id/scores_button_moves"
@@ -81,7 +86,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Moves"
-                android:textSize="12dp" />
+                android:textSize="12dp"
+                android:minHeight="40dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/shape_menu_button_roundsmall" />
 
             <Button
                 android:id="@+id/scores_button_time"
@@ -89,7 +98,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Time"
-                android:textSize="12dp" />
+                android:minHeight="40dp"
+                android:textSize="12dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/shape_menu_button_roundsmall" />
 
         </LinearLayout>
 
