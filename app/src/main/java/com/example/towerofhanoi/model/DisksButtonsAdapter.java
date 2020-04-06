@@ -32,11 +32,13 @@ public class DisksButtonsAdapter extends RecyclerView.Adapter<DisksButtonsAdapte
 
     private Context context;
     private int maxDisks;
+    private int minDisks;
 
     private int selected;
 
     public DisksButtonsAdapter(Context context, int maxDisks) {
         this.maxDisks = maxDisks;
+        this.minDisks = Settings.MIN_DISKS_NUMBER;
         this.context = context;
         selected = Settings.getInstance(context).getDisksNumber();
     }
@@ -59,9 +61,9 @@ public class DisksButtonsAdapter extends RecyclerView.Adapter<DisksButtonsAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.diskButton.setText(String.valueOf(position+1));
+        holder.diskButton.setText(String.valueOf(position+minDisks));
 
-        final int disksNumber = position+1;
+        final int disksNumber = position+minDisks;
 
         if (selected == disksNumber) {
             holder.diskButton.setSelected(true);
@@ -80,11 +82,11 @@ public class DisksButtonsAdapter extends RecyclerView.Adapter<DisksButtonsAdapte
 
     @Override
     public long getItemId(int position) {
-        return position+1;
+        return position+minDisks;
     }
 
     @Override
     public int getItemCount() {
-        return maxDisks;
+        return maxDisks-minDisks;
     }
 }

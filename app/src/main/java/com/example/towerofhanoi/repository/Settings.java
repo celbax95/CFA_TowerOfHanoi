@@ -10,7 +10,7 @@ public class Settings {
 
     private static final String DISKS_NUMBER = "DISKS_NUMBER";
 
-    private static final int MIN_DISKS_NUMBER = 3;
+    public static final int MIN_DISKS_NUMBER = 3;
 
     private static Settings instance = null;
 
