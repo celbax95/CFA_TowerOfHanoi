@@ -11,6 +11,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.example.towerofhanoi.R;
 import com.example.towerofhanoi.model.Disk;
 import com.example.towerofhanoi.model.Rod;
 
@@ -21,8 +22,9 @@ public class DiskView extends View {
 
     public static final double MIN_WIDTH = 0.1;
     public static final double MAX_WIDTH = 0.95;
-    private static final int COLOR_RANGE_MAX = 220;
-    private static final int COLOR_RANGE_MIN = 150;
+
+    private int colorRangeMax;
+    private int colorRangeMin;
 
     private static final int DISK_HEIGHT = 15;
     private static final int DISK_HEIGHT_LARGE = 38;
@@ -42,6 +44,7 @@ public class DiskView extends View {
     private int height;
     private boolean largeHeight;
     private int textSize;
+    private int textColor;
 
     public DiskView(Context context, Disk disk, LinearLayout[] rods, float baseHeight, boolean largeHeight) {
         super(context);
@@ -58,19 +61,27 @@ public class DiskView extends View {
 
         paint = new Paint();
 
-        color = getRandomColor();
+        TypedValue value = new TypedValue();
+        context.getTheme().resolveAttribute(R.attr.color_game_diskColorMin, value, true);
+        colorRangeMin = value.data;
+
+        context.getTheme().resolveAttribute(R.attr.color_game_diskColorMax, value, true);
+        colorRangeMax = value.data;
+
+        color = getRandomColor(colorRangeMin, colorRangeMax);
+
+        context.getTheme().resolveAttribute(R.attr.color_game_diskText, value, true);
+        textColor = value.data;
     }
 
-    private static int getRandomColor() {
+    private int getRandomColor(int rangeMin, int rangeMax) {
         Random rand = new Random();
 
-        int range = COLOR_RANGE_MAX - COLOR_RANGE_MIN;
+        int range = rangeMax - rangeMin;
 
-        int r = rand.nextInt(range) + COLOR_RANGE_MIN;
-        int g = rand.nextInt(range) + COLOR_RANGE_MIN;
-        int b = rand.nextInt(range) + COLOR_RANGE_MIN;
+        int c = rand.nextInt(range) + rangeMin;
 
-        return Color.rgb(r, r, r);
+        return Color.rgb(c,c,c);
     }
 
     public Disk getDisk() {
@@ -122,7 +133,7 @@ public class DiskView extends View {
 
         canvas.drawRoundRect(x, y, x + width, y + height, 10, 10, paint);
 
-        paint.setColor(Color.BLACK);
+        paint.setColor(textColor);
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         paint.setTextAlign(Paint.Align.CENTER);
         canvas.drawText(String.valueOf(disk.getSize()),
