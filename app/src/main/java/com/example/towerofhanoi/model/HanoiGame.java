@@ -13,6 +13,8 @@ public class HanoiGame implements RodListener {
 
     private static final int ROD_COUNT = 3;
 
+    private int moveCount;
+
     private List<Rod> rods;
 
     private GameListener gameListener;
@@ -27,6 +29,10 @@ public class HanoiGame implements RodListener {
 
     public HanoiGame() {
         rods = new ArrayList<>();
+    }
+
+    public void addMove() {
+        gameListener.onMovementsChanged(++moveCount);
     }
 
     public Rod getRod(int id) {

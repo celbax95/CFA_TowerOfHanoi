@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,6 +45,9 @@ public class FragmentGame extends Fragment implements GameListener {
 
     private LinearLayout[] rods;
 
+    private TextView time;
+    private TextView moves;
+
     public FragmentGame(Context context, FragmentManager fragmentManager, String name) {
         super(context, fragmentManager, name);
         diskViews = new HashMap<>();
@@ -69,6 +73,13 @@ public class FragmentGame extends Fragment implements GameListener {
                 v.findViewById(R.id.game_ll_rod_middle),
                 v.findViewById(R.id.game_ll_rod_right)
         };
+
+        time = v.findViewById(R.id.game_text_time);
+        time.setText("");
+
+
+        moves = v.findViewById(R.id.game_text_moves);
+        moves.setText("0");
 
         initGame();
 
@@ -153,21 +164,20 @@ public class FragmentGame extends Fragment implements GameListener {
 
                         float minDist = Math.min(Math.min(distToRl, distToRm), distToRr);
 
+                        Rod addRod = null;
+
                         if (minDist == distToRl) {
-                            Rod r = game.getRod(LEFT_ROD);
-                            if (r.canAdd(d)) {
-                                r.addDisk(d.getHolder().getAndRemove());
-                            }
+                            addRod = game.getRod(LEFT_ROD);
+
                         } else if (minDist == distToRm) {
-                            Rod r = game.getRod(MIDDLE_ROD);
-                            if (r.canAdd(d)) {
-                                r.addDisk(d.getHolder().getAndRemove());
-                            }
+                            addRod = game.getRod(MIDDLE_ROD);
                         } else if (minDist == distToRr) {
-                            Rod r = game.getRod(RIGHT_ROD);
-                            if (r.canAdd(d)) {
-                                r.addDisk(d.getHolder().getAndRemove());
-                            }
+                            addRod = game.getRod(RIGHT_ROD);
+                        }
+
+                        if (addRod != null && addRod.canAdd(d)) {
+                            addRod.addDisk(d.getHolder().getAndRemove());
+                            game.addMove();
                         }
 
                         dv.setInitialized(false);
@@ -244,5 +254,15 @@ public class FragmentGame extends Fragment implements GameListener {
     @Override
     public void onGameWin() {
         fragmentManager.setFragment(FragmentManager.MENU);
+    }
+
+    @Override
+    public void onMovementsChanged(int movementCount) {
+        moves.setText(String.valueOf(movementCount));
+    }
+
+    @Override
+    public void onTimeChanged(int time) {
+
     }
 }
