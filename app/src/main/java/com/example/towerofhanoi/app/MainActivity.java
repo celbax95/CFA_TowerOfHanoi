@@ -45,9 +45,6 @@ public class MainActivity extends AppCompatActivity implements com.example.tower
         if (currentFragment != null) {
             relayBack = currentFragment.onBackPressed();
         }
-
-        Log.d("BAAAAAAAAAAACK", String.valueOf(relayBack));
-
         if (relayBack) {
             super.onBackPressed();
         }

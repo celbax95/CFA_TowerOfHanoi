@@ -5,9 +5,9 @@ public class Disk {
 
     private Rod holder;
 
-    public Disk(int size) {
+    public Disk(Rod holder, int size) {
         this.size = size;
-        holder = null;
+        this.holder = holder;
     }
 
     public boolean hasHolder() {

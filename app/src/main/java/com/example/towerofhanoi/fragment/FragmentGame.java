@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -26,8 +27,18 @@ import androidx.annotation.Nullable;
 
 import com.example.towerofhanoi.R;
 import com.example.towerofhanoi.app.FragmentManager;
+import com.example.towerofhanoi.model.Disk;
+import com.example.towerofhanoi.model.HanoiGame;
+import com.example.towerofhanoi.repository.Settings;
+import com.example.towerofhanoi.view.DiskView;
+
+import java.util.List;
 
 public class FragmentGame extends Fragment {
+
+    private HanoiGame game;
+
+    private LinearLayout[] rods;
 
     public FragmentGame(Context context, FragmentManager fragmentManager, String name) {
         super(context, fragmentManager, name);
@@ -39,11 +50,36 @@ public class FragmentGame extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View v = inflater.inflate(R.layout.fragment_game, null);
+        final View v = inflater.inflate(R.layout.fragment_game, null);
+
+        rods = new LinearLayout[] {
+                v.findViewById(R.id.game_ll_rod_left),
+                v.findViewById(R.id.game_ll_rod_middle),
+                v.findViewById(R.id.game_ll_rod_right)
+        };
 
         initButtonBack(v);
 
+        initGame(v);
+
         return v;
+    }
+
+    private void initGame(View v) {
+        // Settings.getInstance(context).getDisksNumber()
+        game = new HanoiGame();
+
+        List<Disk> disks = game.initGame(1);
+
+        DiskView diskView = new DiskView(context, disks.get(0), rods, 3);
+
+        FrameLayout gameFrame = v.findViewById(R.id.game_frame);
+
+        diskView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT));
+
+        gameFrame.addView(diskView);
+
+        gameFrame.invalidate();
     }
 
     private void initButtonBack(View v) {
@@ -57,7 +93,7 @@ public class FragmentGame extends Fragment {
     }
 
     private void d(Object o) {
-        Log.d("DEBUG", o.toString());
+        Log.d("GAME", o.toString());
     }
 
     @Override

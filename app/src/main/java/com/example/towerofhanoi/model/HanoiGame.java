@@ -1,5 +1,7 @@
 package com.example.towerofhanoi.model;
 
+import android.util.Log;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,22 +13,34 @@ public class HanoiGame {
     private List<Rod> rods;
 
     public HanoiGame() {
-        rods = new ArrayList<>(ROD_COUNT);
+        rods = new ArrayList<>();
     }
 
     public Rod getRod(int id) {
         return rods.get(id);
     }
 
-    public void initGame(int diskCount) {
+    public List<Disk> initGame(int diskCount) {
         for (int i = 0; i< ROD_COUNT; i++) {
-            rods.set(i,new Rod(i, diskCount));
+            rods.add(new Rod(i, diskCount));
         }
 
         Rod firstRod = rods.get(0);
 
+        ArrayList<Disk> disks = new ArrayList<>();
+
         for (int i = diskCount; i > 0; i--) {
-            firstRod.addDisk(new Disk(i));
+            Disk d = new Disk(firstRod, i);
+
+            disks.add(d);
+
+            firstRod.addDisk(d);
         }
+
+        return disks;
+    }
+
+    private void d(Object o) {
+        Log.d("HANOI_GAME", o.toString());
     }
 }
