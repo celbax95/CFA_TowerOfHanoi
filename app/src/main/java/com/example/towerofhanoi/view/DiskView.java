@@ -151,6 +151,10 @@ public class DiskView extends View {
         this.y = y;
     }
 
+    public int getDiskHeight() {
+        return height;
+    }
+
     public boolean isInitialized() {
         return initialized;
     }

@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements com.example.tower
     private InitApplication initApplication;
 
     private static void debug(String msg) {
-        Log.d("AAAAAAAAAAAAA", msg);
+        Log.d("MAIN", msg);
     }
 
     public MainActivity() {
@@ -103,9 +103,12 @@ public class MainActivity extends AppCompatActivity implements com.example.tower
 
         if (newFragment != null) {
             if (currentFragment != null) {
+                currentFragment.onStop();
                 getSupportFragmentManager().beginTransaction().hide(currentFragment).show(newFragment).commit();
+                newFragment.onStart();
             } else {
                 getSupportFragmentManager().beginTransaction().show(newFragment).commit();
+                newFragment.onStart();
             }
             currentFragment = newFragment;
         }

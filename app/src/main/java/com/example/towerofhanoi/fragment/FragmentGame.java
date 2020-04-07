@@ -36,6 +36,8 @@ public class FragmentGame extends Fragment implements GameListener {
     private static final int MIDDLE_ROD = 1;
     private static final int RIGHT_ROD = 2;
 
+    private static final int DISK_UP_ON_MOVE = 50;
+
     private static final int MAX_DISK_LARGE_HEIGHT = 10;
 
     private HanoiGame game;
@@ -68,9 +70,9 @@ public class FragmentGame extends Fragment implements GameListener {
                 v.findViewById(R.id.game_ll_rod_right)
         };
 
-        initButtonBack(v);
-
         initGame();
+
+        initButtonBack(v);
 
         for (int i=0; i < rods.length; i++) {
             initRod(rods,i, v);
@@ -90,6 +92,12 @@ public class FragmentGame extends Fragment implements GameListener {
             }
         });
 
+    }
+
+    @Override
+    public void onStart() {
+        resetGame();
+        super.onStart();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -122,7 +130,7 @@ public class FragmentGame extends Fragment implements GameListener {
                         int[] rLoc = new int[2];
                         r.getLocationOnScreen(rLoc);
 
-                        dv.setY(rLoc[1]);
+                        dv.setY(rLoc[1]-dv.getDiskHeight()-DISK_UP_ON_MOVE);
                         dv.invalidate();
                         break;
 
