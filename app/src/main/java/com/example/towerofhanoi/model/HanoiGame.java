@@ -2,7 +2,6 @@ package com.example.towerofhanoi.model;
 
 import android.util.Log;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class HanoiGame {
     }
 
     public List<Disk> initGame(int diskCount) {
-        for (int i = 0; i< ROD_COUNT; i++) {
+        for (int i = 0; i < ROD_COUNT; i++) {
             rods.add(new Rod(i, diskCount));
         }
 

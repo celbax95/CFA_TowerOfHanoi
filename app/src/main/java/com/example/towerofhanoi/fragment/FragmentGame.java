@@ -1,26 +1,16 @@
 package com.example.towerofhanoi.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.ClipData;
-import android.content.ClipDescription;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,10 +19,11 @@ import com.example.towerofhanoi.R;
 import com.example.towerofhanoi.app.FragmentManager;
 import com.example.towerofhanoi.model.Disk;
 import com.example.towerofhanoi.model.HanoiGame;
-import com.example.towerofhanoi.repository.Settings;
 import com.example.towerofhanoi.view.DiskView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FragmentGame extends Fragment {
 
@@ -42,6 +33,7 @@ public class FragmentGame extends Fragment {
 
     public FragmentGame(Context context, FragmentManager fragmentManager, String name) {
         super(context, fragmentManager, name);
+        diskViews = new HashMap<>();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -62,8 +54,85 @@ public class FragmentGame extends Fragment {
 
         initGame(v);
 
+        initRod(rods,0, v);
+
         return v;
     }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void initRod(LinearLayout[] rs, final int ind, View v) {
+
+        LinearLayout r = rs[ind];
+
+        final LinearLayout rl = rs[0];
+        final LinearLayout rm = rs[1];
+        final LinearLayout rr = rs[2];
+
+        r.setOnTouchListener(new View.OnTouchListener() {
+            float dX;
+            float dY;
+
+            Disk d = null;
+            DiskView dv;
+
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int lastAction;
+
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+
+                        d = game.getRod(ind).getTopDisk();
+                        dv = diskViews.get(d);
+
+                        dX = dv.getX() - event.getRawX();
+                        // dY = view.getY() - event.getRawY();
+                        dv.setY(100);
+                        lastAction = MotionEvent.ACTION_DOWN;
+                        break;
+
+                    case MotionEvent.ACTION_MOVE:
+                        // view.setY(event.getRawY() + dY);
+                        dv.setX(event.getRawX() + dX);
+                        lastAction = MotionEvent.ACTION_MOVE;
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+
+                        float rlXC = rl.getX()+rl.getWidth()/2f;
+                        float rmXC = rm.getX()+rm.getWidth()/2f;
+                        float rrXC = rr.getX()+rr.getWidth()/2f;
+
+                        float distToRl = (float) Math.pow((dv.getX()+dv.getWidth()/2f) - rlXC, 2);
+                        float distToRm = (float) Math.pow((dv.getX()+dv.getWidth()/2f) - rmXC, 2);
+                        float distToRr = (float) Math.pow((dv.getX()+dv.getWidth()/2f) - rrXC, 2);
+
+                        d(distToRl, distToRm, distToRr);
+
+                        float minDist = Math.min(Math.min(distToRl, distToRm), distToRr);
+
+                        if (minDist == distToRl) {
+                            game.getRod(0).addDisk(d.getHolder().getAndRemove());
+                        } else if (minDist == distToRm) {
+                            game.getRod(1).addDisk(d.getHolder().getAndRemove());
+                        } else if (minDist == distToRr) {
+                            game.getRod(2).addDisk(d.getHolder().getAndRemove());
+                        }
+
+                        dv.invalidate();
+
+                        break;
+
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });
+    }
+
+    private Map<Disk, DiskView> diskViews;
 
     private void initGame(View v) {
         // Settings.getInstance(context).getDisksNumber()
@@ -76,6 +145,7 @@ public class FragmentGame extends Fragment {
         for (Disk d : disks) {
             DiskView diskView = new DiskView(context, d, rods, 3);
             gameFrame.addView(diskView);
+            this.diskViews.put(d, diskView);
         }
 
         gameFrame.invalidate();
@@ -91,8 +161,15 @@ public class FragmentGame extends Fragment {
         });
     }
 
-    private void d(Object o) {
-        Log.d("GAME", o.toString());
+    private void d(Object... o) {
+
+        String s = "";
+
+        for (Object o1 : o) {
+            s += o1.toString() + " ";
+        }
+
+        Log.d("FRAG_GAME", s.substring(0, s.length() - 1));
     }
 
     @Override

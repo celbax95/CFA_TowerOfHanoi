@@ -2,7 +2,6 @@ package com.example.towerofhanoi.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,37 +9,34 @@ import android.graphics.Typeface;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.towerofhanoi.model.Disk;
 import com.example.towerofhanoi.model.Rod;
 
-import java.util.Arrays;
 import java.util.Random;
 
 public class DiskView extends View {
 
+    public static final double MIN_WIDTH = 0.1;
+    public static final double MAX_WIDTH = 0.95;
     private static final int COLOR_RANGE_MAX = 220;
     private static final int COLOR_RANGE_MIN = 150;
-
     private static final int DISK_HEIGHT = 15;
-
     private static final int DISK_SPACING = 7;
-
-    public static final double MIN_WIDTH = 0.1;
-
-    public static final double MAX_WIDTH = 0.95;
-
+    float baseHeight;
+    int color;
     private Disk disk;
     private LinearLayout[] rods;
-
-    float baseHeight;
-
-    int color;
+    private boolean initialized;
+    private float x;
+    private float y;
+    private int width;
+    private int height;
 
     public DiskView(Context context, Disk disk, LinearLayout[] rods, float baseHeight) {
         super(context);
+        initialized = false;
         this.disk = disk;
         this.rods = rods;
         this.baseHeight = TypedValue.applyDimension(
@@ -48,7 +44,22 @@ public class DiskView extends View {
                 baseHeight,
                 getResources().getDisplayMetrics()
         );
+
+        paint = new Paint();
+
         color = getRandomColor();
+    }
+
+    private static int getRandomColor() {
+        Random rand = new Random();
+
+        int range = COLOR_RANGE_MAX - COLOR_RANGE_MIN;
+
+        int r = rand.nextInt(range) + COLOR_RANGE_MIN;
+        int g = rand.nextInt(range) + COLOR_RANGE_MIN;
+        int b = rand.nextInt(range) + COLOR_RANGE_MIN;
+
+        return Color.rgb(r, r, r);
     }
 
     public Disk getDisk() {
@@ -59,62 +70,89 @@ public class DiskView extends View {
         this.disk = disk;
     }
 
-    private static int getRandomColor() {
-        Random rand = new Random();
-
-        int range = COLOR_RANGE_MAX-COLOR_RANGE_MIN;
-
-        int r = rand.nextInt(range) + COLOR_RANGE_MIN;
-        int g = rand.nextInt(range) + COLOR_RANGE_MIN;
-        int b = rand.nextInt(range) + COLOR_RANGE_MIN;
-
-        return Color.rgb(r,r,r);
-    }
+    private Paint paint;
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        Rod rod = disk.getHolder();
-        int id = rod.getId();
+        if (!initialized) {
+            Rod rod = disk.getHolder();
+            int id = rod.getId();
 
-        LinearLayout holder = rods[id];
+            LinearLayout holder = rods[id];
 
-        //int baseHeight = holder.getHeight();
-        int baseWidth = holder.getWidth();
+            //int baseHeight = holder.getHeight();
+            int baseWidth = holder.getWidth();
 
-        int maxDisks = rod.getMaxSize();
+            int maxDisks = rod.getMaxSize();
 
-        int width = (int) ((((disk.getSize()-1)*MAX_WIDTH/maxDisks)+MIN_WIDTH)*baseWidth);
+            width = (int) ((((disk.getSize() - 1) * MAX_WIDTH / maxDisks) + MIN_WIDTH) * baseWidth);
 
-        int height = DISK_HEIGHT;
+            height = DISK_HEIGHT;
 
-        int[] location = new int[2];
-        holder.getLocationOnScreen(location);
+            @SuppressLint("DrawAllocation") int[] location = new int[2];
+            holder.getLocationOnScreen(location);
 
-        float x = location[0] + holder.getWidth()/2f - width/2f;
+            x = location[0] + holder.getWidth() / 2f - width / 2f;
 
-        float y = location[1]+holder.getHeight()-height*disk.getHeight()-baseHeight - DISK_SPACING*(disk.getHeight());
+            y = location[1] + holder.getHeight() - height * disk.getHeight() - baseHeight - DISK_SPACING * (disk.getHeight());
 
-        @SuppressLint("DrawAllocation") Paint p = new Paint();
+            initialized = true;
+        }
 
-        p.setColor(color);
+        paint.setColor(color);
 
         //p.setColor(Color.parseColor("#e0e0e0"));
 
-        p.setTextSize(15);
+        paint.setTextSize(15);
 
-        canvas.drawRoundRect(x, y, x+width, y+height, 10,10, p);
+        canvas.drawRoundRect(x, y, x + width, y + height, 10, 10, paint);
 
-        p.setColor(Color.BLACK);
-        p.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        p.setTextAlign(Paint.Align.CENTER);
-        canvas.drawText(String.valueOf(disk.getSize()), x+width/2f, y+height/2f - ((p.descent() + p.ascent()) / 2f), p);
-
-        invalidate();
+        paint.setColor(Color.BLACK);
+        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        paint.setTextAlign(Paint.Align.CENTER);
+        canvas.drawText(String.valueOf(disk.getSize()),
+                x + width / 2f,
+                y + height / 2f - ((paint.descent() + paint.ascent()) / 2f),
+                paint);
     }
 
-    private void d(Object...o) {
+    @Override
+    public float getX() {
+        return x;
+    }
+
+    @Override
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    @Override
+    public float getY() {
+        return y;
+    }
+
+    @Override
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public boolean isInitialized() {
+        return initialized;
+    }
+
+    public void setInitialized(boolean initialized) {
+        this.initialized = initialized;
+    }
+
+    @Override
+    public void invalidate() {
+        initialized = false;
+        super.invalidate();
+    }
+
+    private void d(Object... o) {
 
         String s = "";
 
@@ -122,6 +160,6 @@ public class DiskView extends View {
             s += o1.toString() + " ";
         }
 
-        Log.d("DISK_VIEW", s.substring(0,s.length()-1));
+        Log.d("DISK_VIEW", s.substring(0, s.length() - 1));
     }
 }
