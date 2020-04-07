@@ -34,7 +34,14 @@ public class Rod {
     }
 
     public Disk getTopDisk() {
-        return disks.peek();
+        return disks.get(disks.size()-1);
+    }
+
+    public boolean canAdd(Disk d) {
+        if (getDiskCount() != 0) {
+            return getTopDisk().getSize() > d.getSize();
+        }
+        return true;
     }
 
     public Disk getAndRemove() {
@@ -58,7 +65,7 @@ public class Rod {
     }
 
     public boolean addDisk(Disk disk) {
-        if (isEmpty() || (disks.peek().getSize() > disk.getSize() && !isFull())) {
+        if (isEmpty() || (getTopDisk().getSize() > disk.getSize() && !isFull())) {
             disks.add(disk);
             disk.setHolder(this);
             disk.setHeight(getDiskCount());

@@ -72,6 +72,10 @@ public class DiskView extends View {
 
     private Paint paint;
 
+    public int getDiskWidth() {
+        return width;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -88,6 +92,8 @@ public class DiskView extends View {
             int maxDisks = rod.getMaxSize();
 
             width = (int) ((((disk.getSize() - 1) * MAX_WIDTH / maxDisks) + MIN_WIDTH) * baseWidth);
+
+
 
             height = DISK_HEIGHT;
 
@@ -148,7 +154,6 @@ public class DiskView extends View {
 
     @Override
     public void invalidate() {
-        initialized = false;
         super.invalidate();
     }
 
