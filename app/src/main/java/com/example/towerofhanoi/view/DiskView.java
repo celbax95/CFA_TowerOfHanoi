@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -16,12 +17,16 @@ import com.example.towerofhanoi.model.Disk;
 import com.example.towerofhanoi.model.Rod;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class DiskView extends View {
 
-    private static int DISK_HEIGHT = 15;
+    private static final int COLOR_RANGE_MAX = 220;
+    private static final int COLOR_RANGE_MIN = 150;
 
-    private static int DISK_SPACING = 7;
+    private static final int DISK_HEIGHT = 15;
+
+    private static final int DISK_SPACING = 7;
 
     public static final double MIN_WIDTH = 0.1;
 
@@ -32,6 +37,8 @@ public class DiskView extends View {
 
     float baseHeight;
 
+    int color;
+
     public DiskView(Context context, Disk disk, LinearLayout[] rods, float baseHeight) {
         super(context);
         this.disk = disk;
@@ -41,7 +48,7 @@ public class DiskView extends View {
                 baseHeight,
                 getResources().getDisplayMetrics()
         );
-        d(this.baseHeight);
+        color = getRandomColor();
     }
 
     public Disk getDisk() {
@@ -50,6 +57,18 @@ public class DiskView extends View {
 
     public void setDisk(Disk disk) {
         this.disk = disk;
+    }
+
+    private static int getRandomColor() {
+        Random rand = new Random();
+
+        int range = COLOR_RANGE_MAX-COLOR_RANGE_MIN;
+
+        int r = rand.nextInt(range) + COLOR_RANGE_MIN;
+        int g = rand.nextInt(range) + COLOR_RANGE_MIN;
+        int b = rand.nextInt(range) + COLOR_RANGE_MIN;
+
+        return Color.rgb(r,r,r);
     }
 
     @Override
@@ -79,13 +98,16 @@ public class DiskView extends View {
 
         @SuppressLint("DrawAllocation") Paint p = new Paint();
 
-        p.setColor(disk.getHeight()%2==0?Color.RED: Color.GREEN);
+        p.setColor(color);
+
+        //p.setColor(Color.parseColor("#e0e0e0"));
 
         p.setTextSize(15);
 
         canvas.drawRoundRect(x, y, x+width, y+height, 10,10, p);
 
-        p.setColor(Color.BLUE);
+        p.setColor(Color.BLACK);
+        p.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         p.setTextAlign(Paint.Align.CENTER);
         canvas.drawText(String.valueOf(disk.getSize()), x+width/2f, y+height/2f - ((p.descent() + p.ascent()) / 2f), p);
 
