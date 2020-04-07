@@ -44,7 +44,11 @@ public class Rod {
     }
 
     public Disk getTopDisk() {
-        return disks.get(disks.size()-1);
+        try {
+            return disks.get(disks.size()-1);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     public boolean canAdd(Disk d) {

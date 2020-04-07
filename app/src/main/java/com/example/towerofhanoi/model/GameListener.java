@@ -5,6 +5,6 @@ public interface GameListener {
 
     void onMovementsChanged(int movementCount);
 
-    void onTimeChanged(int time);
+    void onTimeChanged(long time);
 
 }

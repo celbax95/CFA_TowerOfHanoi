@@ -1,11 +1,14 @@
 package com.example.towerofhanoi.model;
 
 import android.util.Log;
+import android.widget.Chronometer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HanoiGame implements RodListener {
+
+    private static final int A_SECOND = 1000;
 
     private static final int LEFT_ROD = 0;
     private static final int MIDDLE_ROD = 1;
@@ -15,9 +18,19 @@ public class HanoiGame implements RodListener {
 
     private int moveCount;
 
+    private long secondsSinceStarted;
+
     private List<Rod> rods;
 
+    private Thread timerThread;
+
     private GameListener gameListener;
+
+    public HanoiGame() {
+        rods = new ArrayList<>();
+        moveCount = 0;
+        secondsSinceStarted = 0;
+    }
 
     public GameListener getGameListener() {
         return gameListener;
@@ -27,12 +40,51 @@ public class HanoiGame implements RodListener {
         this.gameListener = gameListener;
     }
 
-    public HanoiGame() {
-        rods = new ArrayList<>();
+    public void addMove() {
+        if (moveCount == 0) {
+            secondsSinceStarted = 0;
+            startTimer();
+        }
+        gameListener.onMovementsChanged(++moveCount);
     }
 
-    public void addMove() {
-        gameListener.onMovementsChanged(++moveCount);
+    public void stopTimer() {
+        if (timerThread != null) {
+            timerThread.interrupt();
+        }
+        timerThread = null;
+    }
+
+    private void startTimer() {
+        stopTimer();
+        timerThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (!Thread.currentThread().isInterrupted()) {
+                    d("RUN");
+                    try {
+                        Thread.sleep(A_SECOND);
+                    } catch (InterruptedException e) {
+                        return;
+                    }
+
+                    gameListener.onTimeChanged(++secondsSinceStarted);
+                }
+            }
+        });
+        timerThread.setName("HanoiGame_TimeCounter");
+        timerThread.start();
+    }
+
+    public void setPause(boolean pause) {
+        if (pause) {
+            stopTimer();
+        } else {
+            if (moveCount > 0) {
+                startTimer();
+            }
+        }
+
     }
 
     public Rod getRod(int id) {
@@ -40,6 +92,12 @@ public class HanoiGame implements RodListener {
     }
 
     public List<Disk> initGame(int diskCount) {
+        stopTimer();
+        secondsSinceStarted = 0;
+        gameListener.onTimeChanged(0);
+        moveCount = 0;
+        gameListener.onMovementsChanged(moveCount);
+
 
         rods.removeAll(rods);
 

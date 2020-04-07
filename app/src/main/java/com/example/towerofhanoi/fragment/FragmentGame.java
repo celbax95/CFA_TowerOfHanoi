@@ -32,6 +32,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class FragmentGame extends Fragment implements GameListener {
+    private static final double GET_H_FROM_S = 3600D;
+    private static final double GET_M_FROM_S = 60D;
 
     private static final int LEFT_ROD = 0;
     private static final int MIDDLE_ROD = 1;
@@ -106,6 +108,24 @@ public class FragmentGame extends Fragment implements GameListener {
     }
 
     @Override
+    public void onStop() {
+        game.stopTimer();
+        super.onStop();
+    }
+
+    @Override
+    public void onPause() {
+        game.setPause(true);
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        game.setPause(false);
+        super.onResume();
+    }
+
+    @Override
     public void onStart() {
         resetGame();
         super.onStart();
@@ -133,6 +153,11 @@ public class FragmentGame extends Fragment implements GameListener {
                     case MotionEvent.ACTION_DOWN:
 
                         d = game.getRod(ind).getTopDisk();
+
+                        if (d == null) {
+                            return false;
+                        }
+
                         dv = diskViews.get(d);
 
                         assert dv != null;
@@ -146,12 +171,17 @@ public class FragmentGame extends Fragment implements GameListener {
                         break;
 
                     case MotionEvent.ACTION_MOVE:
+                        if (d == null) {
+                            return false;
+                        }
                         dv.setX(event.getRawX() + dX);
                         dv.invalidate();
                         break;
 
                     case MotionEvent.ACTION_UP:
-
+                        if (d == null) {
+                            return false;
+                        }
                         float rlXC = rl.getX()+rl.getWidth()/2f;
                         float rmXC = rm.getX()+rm.getWidth()/2f;
                         float rrXC = rr.getX()+rr.getWidth()/2f;
@@ -262,7 +292,34 @@ public class FragmentGame extends Fragment implements GameListener {
     }
 
     @Override
-    public void onTimeChanged(int time) {
+    public void onTimeChanged(long time) {
+        this.time.setText(getTimeString(time));
+    }
 
+    @SuppressLint("DefaultLocale")
+    private String getTimeString(long time) {
+        long tmpTime = time;
+
+        String ret = "";
+        boolean firstDone = false;
+
+        int h = (int) Math.floor(tmpTime/ GET_H_FROM_S);
+        if (h != 0) {
+            ret+=(h+":");
+            firstDone = true;
+        }
+        tmpTime%= GET_H_FROM_S;
+
+        int m = (int) Math.floor(tmpTime/ GET_M_FROM_S);
+        if (m != 0 || firstDone) {
+            ret = String.format(ret+"%02d:", m);
+            firstDone = true;
+        }
+        tmpTime%= GET_M_FROM_S;
+
+        int s = (int) Math.floor(tmpTime);
+        ret = String.format(ret+"%02d", s);
+
+        return ret;
     }
 }
