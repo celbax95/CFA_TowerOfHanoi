@@ -58,13 +58,10 @@ public class Rod {
     }
 
     public boolean addDisk(Disk disk) {
-        if (isEmpty()) {
+        if (isEmpty() || (disks.peek().getSize() > disk.getSize() && !isFull())) {
             disks.add(disk);
             disk.setHolder(this);
-            return true;
-        } else if (disks.peek().getSize() > disk.getSize() && !isFull()) {
-            disks.add(disk);
-            disk.setHolder(this);
+            disk.setHeight(getDiskCount());
             return true;
         } else {
             return false;

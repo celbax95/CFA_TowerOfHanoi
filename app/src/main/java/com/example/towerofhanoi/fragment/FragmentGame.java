@@ -69,15 +69,14 @@ public class FragmentGame extends Fragment {
         // Settings.getInstance(context).getDisksNumber()
         game = new HanoiGame();
 
-        List<Disk> disks = game.initGame(1);
-
-        DiskView diskView = new DiskView(context, disks.get(0), rods, 3);
+        List<Disk> disks = game.initGame(23);
 
         FrameLayout gameFrame = v.findViewById(R.id.game_frame);
 
-        diskView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT));
-
-        gameFrame.addView(diskView);
+        for (Disk d : disks) {
+            DiskView diskView = new DiskView(context, d, rods, 3);
+            gameFrame.addView(diskView);
+        }
 
         gameFrame.invalidate();
     }

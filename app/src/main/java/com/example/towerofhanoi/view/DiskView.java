@@ -19,7 +19,13 @@ import java.util.Arrays;
 
 public class DiskView extends View {
 
-    private static int DISK_HEIGHT = 10;
+    private static int DISK_HEIGHT = 15;
+
+    private static int DISK_SPACING = 7;
+
+    public static final double MIN_WIDTH = 0.1;
+
+    public static final double MAX_WIDTH = 0.95;
 
     private Disk disk;
     private LinearLayout[] rods;
@@ -60,7 +66,7 @@ public class DiskView extends View {
 
         int maxDisks = rod.getMaxSize();
 
-        int width = (int) ((disk.getSize()/(float)maxDisks)*baseWidth);
+        int width = (int) ((((disk.getSize()-1)*MAX_WIDTH/maxDisks)+MIN_WIDTH)*baseWidth);
 
         int height = DISK_HEIGHT;
 
@@ -69,12 +75,19 @@ public class DiskView extends View {
 
         float x = location[0] + holder.getWidth()/2f - width/2f;
 
-        float y = location[1]+holder.getHeight()-height-baseHeight;
+        float y = location[1]+holder.getHeight()-height*disk.getHeight()-baseHeight - DISK_SPACING*(disk.getHeight());
 
         @SuppressLint("DrawAllocation") Paint p = new Paint();
-        p.setColor(Color.RED);
+
+        p.setColor(disk.getHeight()%2==0?Color.RED: Color.GREEN);
+
+        p.setTextSize(15);
 
         canvas.drawRoundRect(x, y, x+width, y+height, 10,10, p);
+
+        p.setColor(Color.BLUE);
+        p.setTextAlign(Paint.Align.CENTER);
+        canvas.drawText(String.valueOf(disk.getSize()), x+width/2f, y+height/2f - ((p.descent() + p.ascent()) / 2f), p);
 
         invalidate();
     }

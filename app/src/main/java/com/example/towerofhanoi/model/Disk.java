@@ -5,9 +5,19 @@ public class Disk {
 
     private Rod holder;
 
+    private int height; // 1 bottom / maxHeight top
+
     public Disk(Rod holder, int size) {
         this.size = size;
         this.holder = holder;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public boolean hasHolder() {
