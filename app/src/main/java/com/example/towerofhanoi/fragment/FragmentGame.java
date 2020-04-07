@@ -19,8 +19,10 @@ import androidx.annotation.Nullable;
 import com.example.towerofhanoi.R;
 import com.example.towerofhanoi.app.FragmentManager;
 import com.example.towerofhanoi.model.Disk;
+import com.example.towerofhanoi.model.GameListener;
 import com.example.towerofhanoi.model.HanoiGame;
 import com.example.towerofhanoi.model.Rod;
+import com.example.towerofhanoi.repository.Settings;
 import com.example.towerofhanoi.view.DiskView;
 
 import java.util.HashMap;
@@ -28,7 +30,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class FragmentGame extends Fragment {
+public class FragmentGame extends Fragment implements GameListener {
+
+    private static final int LEFT_ROD = 0;
+    private static final int MIDDLE_ROD = 1;
+    private static final int RIGHT_ROD = 2;
+
+    private static final int MAX_DISK_LARGE_HEIGHT = 10;
 
     private HanoiGame game;
 
@@ -38,6 +46,7 @@ public class FragmentGame extends Fragment {
         super(context, fragmentManager, name);
         diskViews = new HashMap<>();
         game = new HanoiGame();
+        game.setGameListener(this);
     }
 
     private FrameLayout gameFrame;
@@ -48,6 +57,7 @@ public class FragmentGame extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
+        @SuppressLint("InflateParams")
         final View v = inflater.inflate(R.layout.fragment_game, null);
 
         gameFrame = v.findViewById(R.id.game_frame);
@@ -87,9 +97,9 @@ public class FragmentGame extends Fragment {
 
         final LinearLayout r = rs[ind];
 
-        final LinearLayout rl = rs[0];
-        final LinearLayout rm = rs[1];
-        final LinearLayout rr = rs[2];
+        final LinearLayout rl = rs[LEFT_ROD];
+        final LinearLayout rm = rs[MIDDLE_ROD];
+        final LinearLayout rr = rs[RIGHT_ROD];
 
         r.setOnTouchListener(new View.OnTouchListener() {
             float dX;
@@ -100,8 +110,6 @@ public class FragmentGame extends Fragment {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                int lastAction;
-
                 switch (event.getActionMasked()) {
                     case MotionEvent.ACTION_DOWN:
 
@@ -116,14 +124,10 @@ public class FragmentGame extends Fragment {
 
                         dv.setY(rLoc[1]);
                         dv.invalidate();
-
-                        lastAction = MotionEvent.ACTION_DOWN;
                         break;
 
                     case MotionEvent.ACTION_MOVE:
-                        // view.setY(event.getRawY() + dY);
                         dv.setX(event.getRawX() + dX);
-                        lastAction = MotionEvent.ACTION_MOVE;
                         dv.invalidate();
                         break;
 
@@ -142,17 +146,17 @@ public class FragmentGame extends Fragment {
                         float minDist = Math.min(Math.min(distToRl, distToRm), distToRr);
 
                         if (minDist == distToRl) {
-                            Rod r = game.getRod(0);
+                            Rod r = game.getRod(LEFT_ROD);
                             if (r.canAdd(d)) {
                                 r.addDisk(d.getHolder().getAndRemove());
                             }
                         } else if (minDist == distToRm) {
-                            Rod r = game.getRod(1);
+                            Rod r = game.getRod(MIDDLE_ROD);
                             if (r.canAdd(d)) {
                                 r.addDisk(d.getHolder().getAndRemove());
                             }
                         } else if (minDist == distToRr) {
-                            Rod r = game.getRod(2);
+                            Rod r = game.getRod(RIGHT_ROD);
                             if (r.canAdd(d)) {
                                 r.addDisk(d.getHolder().getAndRemove());
                             }
@@ -187,12 +191,12 @@ public class FragmentGame extends Fragment {
     }
 
     private void initGame() {
-        // Settings.getInstance(context).getDisksNumber()
+        int diskCount = Settings.getInstance(context).getDiskCount();
 
-        List<Disk> disks = game.initGame(23);
+        List<Disk> disks = game.initGame(10);
 
         for (Disk d : disks) {
-            DiskView diskView = new DiskView(context, d, rods, 3);
+            DiskView diskView = new DiskView(context, d, rods, 3, diskCount <= MAX_DISK_LARGE_HEIGHT);
             diskView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.NO_GRAVITY));
             gameFrame.addView(diskView);
             this.diskViews.put(d, diskView);
@@ -227,5 +231,10 @@ public class FragmentGame extends Fragment {
         fragmentManager.setFragment(FragmentManager.MENU);
 
         return false;
+    }
+
+    @Override
+    public void onGameWin() {
+        fragmentManager.setFragment(FragmentManager.MENU);
     }
 }

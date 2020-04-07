@@ -5,11 +5,25 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HanoiGame {
+public class HanoiGame implements RodListener {
 
-    public static final int ROD_COUNT = 3;
+    private static final int LEFT_ROD = 0;
+    private static final int MIDDLE_ROD = 1;
+    private static final int RIGHT_ROD = 2;
+
+    private static final int ROD_COUNT = 3;
 
     private List<Rod> rods;
+
+    private GameListener gameListener;
+
+    public GameListener getGameListener() {
+        return gameListener;
+    }
+
+    public void setGameListener(GameListener gameListener) {
+        this.gameListener = gameListener;
+    }
 
     public HanoiGame() {
         rods = new ArrayList<>();
@@ -24,10 +38,13 @@ public class HanoiGame {
         rods.removeAll(rods);
 
         for (int i = 0; i < ROD_COUNT; i++) {
-            rods.add(new Rod(i, diskCount));
+            Rod r = new Rod(i, diskCount);
+            rods.add(r);
         }
 
-        Rod firstRod = rods.get(0);
+        rods.get(RIGHT_ROD).setRodListener(this);
+
+        Rod firstRod = rods.get(LEFT_ROD);
 
         ArrayList<Disk> disks = new ArrayList<>();
 
@@ -44,5 +61,14 @@ public class HanoiGame {
 
     private void d(Object o) {
         Log.d("HANOI_GAME", o.toString());
+    }
+
+    @Override
+    public void onRodFull(Rod rod) {
+        if (rod.getId() == RIGHT_ROD) {
+            if (gameListener != null) {
+                gameListener.onGameWin();
+            }
+        }
     }
 }

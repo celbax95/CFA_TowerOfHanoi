@@ -7,9 +7,19 @@ import java.util.Stack;
 public class Rod {
     private Stack<Disk> disks;
 
-    int id;
+    private int id;
 
-    public int maxSize;
+    private int maxSize;
+
+    private RodListener rodListener;
+
+    public RodListener getRodListener() {
+        return rodListener;
+    }
+
+    public void setRodListener(RodListener rodListener) {
+        this.rodListener = rodListener;
+    }
 
     public int getMaxSize() {
         return maxSize;
@@ -69,6 +79,13 @@ public class Rod {
             disks.add(disk);
             disk.setHolder(this);
             disk.setHeight(getDiskCount());
+
+            if (getDiskCount() == maxSize) {
+                if (rodListener != null) {
+                    rodListener.onRodFull(this);
+                }
+            }
+
             return true;
         } else {
             return false;

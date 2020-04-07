@@ -1,22 +1,16 @@
 package com.example.towerofhanoi.model;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.towerofhanoi.R;
 import com.example.towerofhanoi.repository.Settings;
-
-import java.util.ArrayList;
 
 public class DisksButtonsAdapter extends RecyclerView.Adapter<DisksButtonsAdapter.MyViewHolder> {
 
@@ -40,7 +34,7 @@ public class DisksButtonsAdapter extends RecyclerView.Adapter<DisksButtonsAdapte
         this.maxDisks = maxDisks;
         this.minDisks = Settings.MIN_DISKS_NUMBER;
         this.context = context;
-        selected = Settings.getInstance(context).getDisksNumber();
+        selected = Settings.getInstance(context).getDiskCount();
     }
 
     @NonNull

@@ -27,7 +27,7 @@ public class Settings {
         editor.apply();
     }
 
-    public int getDisksNumber() {
+    public int getDiskCount() {
         return disksNumber;
     }
 

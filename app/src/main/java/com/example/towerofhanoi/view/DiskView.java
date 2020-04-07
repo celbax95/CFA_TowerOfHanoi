@@ -16,13 +16,20 @@ import com.example.towerofhanoi.model.Rod;
 
 import java.util.Random;
 
+@SuppressLint("ViewConstructor")
 public class DiskView extends View {
 
     public static final double MIN_WIDTH = 0.1;
     public static final double MAX_WIDTH = 0.95;
     private static final int COLOR_RANGE_MAX = 220;
     private static final int COLOR_RANGE_MIN = 150;
+
     private static final int DISK_HEIGHT = 15;
+    private static final int DISK_HEIGHT_LARGE = 38;
+
+    private static final int TEXT_SIZE = 15;
+    private static final int TEXT_SIZE_LARGE = 35;
+
     private static final int DISK_SPACING = 7;
     float baseHeight;
     int color;
@@ -33,8 +40,10 @@ public class DiskView extends View {
     private float y;
     private int width;
     private int height;
+    private boolean largeHeight;
+    private int textSize;
 
-    public DiskView(Context context, Disk disk, LinearLayout[] rods, float baseHeight) {
+    public DiskView(Context context, Disk disk, LinearLayout[] rods, float baseHeight, boolean largeHeight) {
         super(context);
         initialized = false;
         this.disk = disk;
@@ -44,6 +53,8 @@ public class DiskView extends View {
                 baseHeight,
                 getResources().getDisplayMetrics()
         );
+
+        this.largeHeight = largeHeight;
 
         paint = new Paint();
 
@@ -93,9 +104,7 @@ public class DiskView extends View {
 
             width = (int) ((((disk.getSize() - 1) * MAX_WIDTH / maxDisks) + MIN_WIDTH) * baseWidth);
 
-
-
-            height = DISK_HEIGHT;
+            height = largeHeight?DISK_HEIGHT_LARGE:DISK_HEIGHT;
 
             @SuppressLint("DrawAllocation") int[] location = new int[2];
             holder.getLocationOnScreen(location);
@@ -109,9 +118,7 @@ public class DiskView extends View {
 
         paint.setColor(color);
 
-        //p.setColor(Color.parseColor("#e0e0e0"));
-
-        paint.setTextSize(15);
+        paint.setTextSize(largeHeight?TEXT_SIZE_LARGE:TEXT_SIZE);
 
         canvas.drawRoundRect(x, y, x + width, y + height, 10, 10, paint);
 
