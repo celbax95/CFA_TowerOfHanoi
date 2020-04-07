@@ -51,15 +51,15 @@ public class ScoresRepository {
     }
 
     public ArrayList<Score> getOrderedByDate(int disks) {
-        return get(disks, "date, moves, time");
+        return get(disks, "date DESC, moves, time");
     }
 
     public ArrayList<Score> getOrderedByTime(int disks) {
-        return get(disks, "time, moves, date");
+        return get(disks, "time, moves, date DESC");
     }
 
     public ArrayList<Score> getOrderedByMoves(int disks) {
-        return get(disks, "moves, time, date");
+        return get(disks, "moves, time, date DESC");
     }
 
     public ArrayList<Score> get(int disks, String orderBy) {
