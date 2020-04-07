@@ -10,9 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.towerofhanoi.R;
+import com.example.towerofhanoi.fragment.FragmentScores;
 import com.example.towerofhanoi.repository.Settings;
 
 public class DisksButtonsAdapter extends RecyclerView.Adapter<DisksButtonsAdapter.MyViewHolder> {
+
+    private DiskSelectorListener selectorListener;
+
+    public void setSelectionListener(DiskSelectorListener listener) {
+        selectorListener = listener;
+    }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -32,7 +39,7 @@ public class DisksButtonsAdapter extends RecyclerView.Adapter<DisksButtonsAdapte
 
     public DisksButtonsAdapter(Context context, int maxDisks) {
         this.maxDisks = maxDisks;
-        this.minDisks = Settings.MIN_DISKS_NUMBER;
+        this.minDisks = Settings.MIN_DISKS_COUNT;
         this.context = context;
         selected = Settings.getInstance(context).getDiskCount();
     }
@@ -51,6 +58,7 @@ public class DisksButtonsAdapter extends RecyclerView.Adapter<DisksButtonsAdapte
 
     public void setSelected(int selected) {
         this.selected = selected;
+        selectorListener.onDiskSelectorSelected(this.selected);
     }
 
     @Override

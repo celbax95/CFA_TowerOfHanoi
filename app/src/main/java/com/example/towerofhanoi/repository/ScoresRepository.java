@@ -69,8 +69,8 @@ public class ScoresRepository {
                 "SELECT date as date, disks as disks, moves as moves, time as time " +
                         "FROM " + TABLE + " " +
                         "WHERE disks = ? " +
-                        "ORDER BY ? DESC",
-                new String[] {String.valueOf(disks), orderBy});
+                        "ORDER BY " + orderBy,
+                new String[] {String.valueOf(disks)});
 
         if (c.getCount() == 0) {
             return scores;

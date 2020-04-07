@@ -4,13 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import java.util.prefs.PreferenceChangeEvent;
-
 public class Settings {
+
+    public static final int MAX_DISK_COUNT = 23;
 
     private static final String DISKS_NUMBER = "DISKS_NUMBER";
 
-    public static final int MIN_DISKS_NUMBER = 3;
+    public static final int MIN_DISKS_COUNT = 3;
 
     private static Settings instance = null;
 
@@ -36,7 +36,7 @@ public class Settings {
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         int i = 0;
-        disksNumber = pref.getInt(DISKS_NUMBER, MIN_DISKS_NUMBER);
+        disksNumber = pref.getInt(DISKS_NUMBER, MIN_DISKS_COUNT);
     }
 
     public static Settings getInstance(Context context) {
