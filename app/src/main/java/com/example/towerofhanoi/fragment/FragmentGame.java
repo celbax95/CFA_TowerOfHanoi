@@ -2,8 +2,10 @@ package com.example.towerofhanoi.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,6 +25,8 @@ import com.example.towerofhanoi.model.Disk;
 import com.example.towerofhanoi.model.GameListener;
 import com.example.towerofhanoi.model.HanoiGame;
 import com.example.towerofhanoi.model.Rod;
+import com.example.towerofhanoi.model.Score;
+import com.example.towerofhanoi.repository.ScoresRepository;
 import com.example.towerofhanoi.repository.Settings;
 import com.example.towerofhanoi.view.DiskView;
 
@@ -42,6 +46,8 @@ public class FragmentGame extends Fragment implements GameListener {
     private static final int DISK_UP_ON_MOVE = 50;
 
     private static final int MAX_DISK_LARGE_HEIGHT = 10;
+
+    private static final int UNDEFINED_DISK_COUNT = -1;
 
     private HanoiGame game;
 
@@ -79,7 +85,6 @@ public class FragmentGame extends Fragment implements GameListener {
         time = v.findViewById(R.id.game_text_time);
         time.setText("");
 
-
         moves = v.findViewById(R.id.game_text_moves);
         moves.setText("0");
 
@@ -87,18 +92,16 @@ public class FragmentGame extends Fragment implements GameListener {
 
         initButtonBack(v);
 
-        for (int i=0; i < rods.length; i++) {
-            initRod(rods,i, v);
-        }
-
         initButtonReset(v);
 
         return v;
     }
 
+    private ImageButton resetButton;
+
     private void initButtonReset(View v) {
-        ImageButton b = v.findViewById(R.id.game_button_reset);
-        b.setOnClickListener(new View.OnClickListener() {
+        resetButton = v.findViewById(R.id.game_button_reset);
+        resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 resetGame();
@@ -132,7 +135,20 @@ public class FragmentGame extends Fragment implements GameListener {
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private void initRod(LinearLayout[] rs, final int ind, View v) {
+    private void setRodsClickable(boolean state) {
+        if (state) {
+            for (int i=0; i < rods.length; i++) {
+                initRod(rods,i);
+            }
+        } else {
+            for (LinearLayout rod : rods) {
+                rod.setOnTouchListener(null);
+            }
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void initRod(LinearLayout[] rs, final int ind) {
 
         final LinearLayout r = rs[ind];
 
@@ -226,6 +242,9 @@ public class FragmentGame extends Fragment implements GameListener {
     private Map<Disk, DiskView> diskViews;
 
     private void resetGame() {
+        TypedValue value = new TypedValue();
+        context.getTheme().resolveAttribute(R.attr.color_menu_button_text, value, true);
+        resetButton.setColorFilter(value.data);
 
         Set<Disk> ks = diskViews.keySet();
 
@@ -238,10 +257,12 @@ public class FragmentGame extends Fragment implements GameListener {
         initGame();
     }
 
-    private void initGame() {
-        int diskCount = Settings.getInstance(context).getDiskCount();
+    private int diskCount;
 
-        List<Disk> disks = game.initGame(10);
+    private void initGame() {
+        diskCount = Settings.getInstance(context).getDiskCount();
+
+        List<Disk> disks = game.initGame(diskCount);
 
         for (Disk d : disks) {
             DiskView diskView = new DiskView(context, d, rods, 3, diskCount <= MAX_DISK_LARGE_HEIGHT);
@@ -249,6 +270,8 @@ public class FragmentGame extends Fragment implements GameListener {
             gameFrame.addView(diskView);
             this.diskViews.put(d, diskView);
         }
+
+        setRodsClickable(true);
 
         gameFrame.invalidate();
     }
@@ -283,7 +306,20 @@ public class FragmentGame extends Fragment implements GameListener {
 
     @Override
     public void onGameWin() {
-        fragmentManager.setFragment(FragmentManager.MENU);
+        if (diskCount != UNDEFINED_DISK_COUNT) {
+            ScoresRepository sr = ScoresRepository.getInstance(context);
+
+            Score s = new Score();
+            s.setDate(System.currentTimeMillis());
+            s.setDisks(diskCount);
+            s.setMoves(game.getMoveCount());
+            s.setTime(game.getSecondsSinceStarted());
+
+            sr.add(s);
+
+            setRodsClickable(false);
+            resetButton.setColorFilter(Color.YELLOW);
+        }
     }
 
     @Override

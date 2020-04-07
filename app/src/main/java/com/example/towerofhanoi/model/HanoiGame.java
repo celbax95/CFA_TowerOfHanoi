@@ -8,6 +8,14 @@ import java.util.List;
 
 public class HanoiGame implements RodListener {
 
+    public int getMoveCount() {
+        return moveCount;
+    }
+
+    public long getSecondsSinceStarted() {
+        return secondsSinceStarted;
+    }
+
     private static final int A_SECOND = 1000;
 
     private static final int LEFT_ROD = 0;
@@ -130,6 +138,7 @@ public class HanoiGame implements RodListener {
     @Override
     public void onRodFull(Rod rod) {
         if (rod.getId() == RIGHT_ROD) {
+            stopTimer();
             if (gameListener != null) {
                 gameListener.onGameWin();
             }

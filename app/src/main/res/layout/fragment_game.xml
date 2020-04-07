@@ -45,8 +45,7 @@
                 android:background="@drawable/shape_game_bar"
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginTop="150dp"
-                android:orientation="horizontal"
-                android:clickable="true">
+                android:orientation="horizontal">
 
             </LinearLayout>
 
@@ -58,8 +57,7 @@
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginTop="150dp"
                 android:layout_weight="1"
-                android:orientation="horizontal"
-                android:clickable="true">
+                android:orientation="horizontal">
 
             </LinearLayout>
 
@@ -71,8 +69,7 @@
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginTop="150dp"
                 android:layout_weight="1"
-                android:orientation="horizontal"
-                android:clickable="true">
+                android:orientation="horizontal">
 
 
             </LinearLayout>

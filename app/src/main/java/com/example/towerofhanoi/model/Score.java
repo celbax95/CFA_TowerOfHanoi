@@ -7,10 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Score {
-    private static final double GET_H_FROM_MS = 3600000D;
-    private static final double GET_M_FROM_MS = 60000D;
-    private static final double GET_S_FROM_MS = 1000D;
-    private static final double MS_PRECISION = 100D;
+    private static final double GET_H_FROM_S = 3600D;
+    private static final double GET_M_FROM_S = 60D;
 
     private static final int UNDEFINED = -1;
 
@@ -55,30 +53,22 @@ public class Score {
         String ret = "";
         boolean firstDone = false;
 
-
-        int h = (int) Math.floor(tmpTime/GET_H_FROM_MS);
+        int h = (int) Math.floor(tmpTime/ GET_H_FROM_S);
         if (h != 0) {
             ret+=(h+":");
             firstDone = true;
         }
-        tmpTime%=GET_H_FROM_MS;
+        tmpTime%= GET_H_FROM_S;
 
-        int m = (int) Math.floor(tmpTime/GET_M_FROM_MS);
+        int m = (int) Math.floor(tmpTime/ GET_M_FROM_S);
         if (m != 0 || firstDone) {
             ret = String.format(ret+"%02d:", m);
             firstDone = true;
         }
-        tmpTime%=GET_M_FROM_MS;
+        tmpTime%= GET_M_FROM_S;
 
-        int s = (int) Math.floor(tmpTime/GET_S_FROM_MS);
-        if (s != 0 || firstDone) {
-            ret = String.format(ret+"%02d:", s);
-            firstDone = true;
-        }
-        tmpTime%=GET_S_FROM_MS;
-
-        int ms = (int) Math.round(tmpTime/MS_PRECISION);
-        ret = String.format(ret+"%02d", ms);
+        int s = (int) Math.floor(tmpTime);
+        ret = String.format(ret+"%02d", s);
 
         return ret;
     }
