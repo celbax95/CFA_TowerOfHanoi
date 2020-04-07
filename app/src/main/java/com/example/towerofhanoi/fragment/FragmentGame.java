@@ -55,6 +55,10 @@ public class FragmentGame extends Fragment implements GameListener {
 
     private TextView time;
     private TextView moves;
+    private FrameLayout gameFrame;
+    private ImageButton resetButton;
+    private Map<Disk, DiskView> diskViews;
+    private int diskCount;
 
     public FragmentGame(Context context, FragmentManager fragmentManager, String name) {
         super(context, fragmentManager, name);
@@ -63,20 +67,17 @@ public class FragmentGame extends Fragment implements GameListener {
         game.setGameListener(this);
     }
 
-    private FrameLayout gameFrame;
-
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        @SuppressLint("InflateParams")
-        final View v = inflater.inflate(R.layout.fragment_game, null);
+        @SuppressLint("InflateParams") final View v = inflater.inflate(R.layout.fragment_game, null);
 
         gameFrame = v.findViewById(R.id.game_frame);
 
-        rods = new LinearLayout[] {
+        rods = new LinearLayout[]{
                 v.findViewById(R.id.game_ll_rod_left),
                 v.findViewById(R.id.game_ll_rod_middle),
                 v.findViewById(R.id.game_ll_rod_right)
@@ -96,8 +97,6 @@ public class FragmentGame extends Fragment implements GameListener {
 
         return v;
     }
-
-    private ImageButton resetButton;
 
     private void initButtonReset(View v) {
         resetButton = v.findViewById(R.id.game_button_reset);
@@ -137,8 +136,8 @@ public class FragmentGame extends Fragment implements GameListener {
     @SuppressLint("ClickableViewAccessibility")
     private void setRodsClickable(boolean state) {
         if (state) {
-            for (int i=0; i < rods.length; i++) {
-                initRod(rods,i);
+            for (int i = 0; i < rods.length; i++) {
+                initRod(rods, i);
             }
         } else {
             for (LinearLayout rod : rods) {
@@ -169,7 +168,6 @@ public class FragmentGame extends Fragment implements GameListener {
                     case MotionEvent.ACTION_DOWN:
 
                         d = game.getRod(ind).getTopDisk();
-
                         if (d == null) {
                             return false;
                         }
@@ -182,7 +180,7 @@ public class FragmentGame extends Fragment implements GameListener {
                         int[] rLoc = new int[2];
                         r.getLocationOnScreen(rLoc);
 
-                        dv.setY(rLoc[1]-dv.getDiskHeight()-DISK_UP_ON_MOVE);
+                        dv.setY(rLoc[1] - dv.getDiskHeight() - DISK_UP_ON_MOVE);
                         dv.invalidate();
                         break;
 
@@ -198,15 +196,15 @@ public class FragmentGame extends Fragment implements GameListener {
                         if (d == null) {
                             return false;
                         }
-                        float rlXC = rl.getX()+rl.getWidth()/2f;
-                        float rmXC = rm.getX()+rm.getWidth()/2f;
-                        float rrXC = rr.getX()+rr.getWidth()/2f;
+                        float rlXC = rl.getX() + rl.getWidth() / 2f;
+                        float rmXC = rm.getX() + rm.getWidth() / 2f;
+                        float rrXC = rr.getX() + rr.getWidth() / 2f;
 
-                        float dXC = dv.getX()+dv.getDiskWidth()/2f;
+                        float dXC = dv.getX() + dv.getDiskWidth() / 2f;
 
-                        float distToRl = (float) Math.pow(dXC- rlXC, 2);
+                        float distToRl = (float) Math.pow(dXC - rlXC, 2);
                         float distToRm = (float) Math.pow(dXC - rmXC, 2);
-                        float distToRr = (float) Math.pow(dXC- rrXC, 2);
+                        float distToRr = (float) Math.pow(dXC - rrXC, 2);
 
                         float minDist = Math.min(Math.min(distToRl, distToRm), distToRr);
 
@@ -222,8 +220,8 @@ public class FragmentGame extends Fragment implements GameListener {
                         }
 
                         if (addRod != null && addRod.canAdd(d)) {
-                            addRod.addDisk(d.getHolder().getAndRemove());
                             game.addMove();
+                            addRod.addDisk(d.getHolder().getAndRemove());
                         }
 
                         dv.setInitialized(false);
@@ -238,8 +236,6 @@ public class FragmentGame extends Fragment implements GameListener {
             }
         });
     }
-
-    private Map<Disk, DiskView> diskViews;
 
     private void resetGame() {
         TypedValue value = new TypedValue();
@@ -256,8 +252,6 @@ public class FragmentGame extends Fragment implements GameListener {
 
         initGame();
     }
-
-    private int diskCount;
 
     private void initGame() {
         diskCount = Settings.getInstance(context).getDiskCount();
@@ -339,22 +333,22 @@ public class FragmentGame extends Fragment implements GameListener {
         String ret = "";
         boolean firstDone = false;
 
-        int h = (int) Math.floor(tmpTime/ GET_H_FROM_S);
+        int h = (int) Math.floor(tmpTime / GET_H_FROM_S);
         if (h != 0) {
-            ret+=(h+":");
+            ret += (h + ":");
             firstDone = true;
         }
-        tmpTime%= GET_H_FROM_S;
+        tmpTime %= GET_H_FROM_S;
 
-        int m = (int) Math.floor(tmpTime/ GET_M_FROM_S);
+        int m = (int) Math.floor(tmpTime / GET_M_FROM_S);
         if (m != 0 || firstDone) {
-            ret = String.format(ret+"%02d:", m);
+            ret = String.format(ret + "%02d:", m);
             firstDone = true;
         }
-        tmpTime%= GET_M_FROM_S;
+        tmpTime %= GET_M_FROM_S;
 
         int s = (int) Math.floor(tmpTime);
-        ret = String.format(ret+"%02d", s);
+        ret = String.format(ret + "%02d", s);
 
         return ret;
     }
