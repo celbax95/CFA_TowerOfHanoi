@@ -20,6 +20,9 @@ public class HanoiGame {
     }
 
     public List<Disk> initGame(int diskCount) {
+
+        rods.removeAll(rods);
+
         for (int i = 0; i < ROD_COUNT; i++) {
             rods.add(new Rod(i, diskCount));
         }

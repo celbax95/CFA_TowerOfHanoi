@@ -24,6 +24,7 @@ import com.example.towerofhanoi.view.DiskView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class FragmentGame extends Fragment {
 
@@ -34,7 +35,10 @@ public class FragmentGame extends Fragment {
     public FragmentGame(Context context, FragmentManager fragmentManager, String name) {
         super(context, fragmentManager, name);
         diskViews = new HashMap<>();
+        game = new HanoiGame();
     }
+
+    private FrameLayout gameFrame;
 
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
@@ -44,6 +48,8 @@ public class FragmentGame extends Fragment {
 
         final View v = inflater.inflate(R.layout.fragment_game, null);
 
+        gameFrame = v.findViewById(R.id.game_frame);
+
         rods = new LinearLayout[] {
                 v.findViewById(R.id.game_ll_rod_left),
                 v.findViewById(R.id.game_ll_rod_middle),
@@ -52,11 +58,24 @@ public class FragmentGame extends Fragment {
 
         initButtonBack(v);
 
-        initGame(v);
+        initGame();
 
         initRod(rods,0, v);
 
+        initButtonReset(v);
+
         return v;
+    }
+
+    private void initButtonReset(View v) {
+        ImageButton b = v.findViewById(R.id.game_button_reset);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetGame();
+            }
+        });
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -134,13 +153,23 @@ public class FragmentGame extends Fragment {
 
     private Map<Disk, DiskView> diskViews;
 
-    private void initGame(View v) {
+    private void resetGame() {
+
+        Set<Disk> ks = diskViews.keySet();
+
+        for (Disk d : ks) {
+            gameFrame.removeView(diskViews.get(d));
+        }
+
+        diskViews = new HashMap<>();
+
+        initGame();
+    }
+
+    private void initGame() {
         // Settings.getInstance(context).getDisksNumber()
-        game = new HanoiGame();
 
         List<Disk> disks = game.initGame(23);
-
-        FrameLayout gameFrame = v.findViewById(R.id.game_frame);
 
         for (Disk d : disks) {
             DiskView diskView = new DiskView(context, d, rods, 3);
