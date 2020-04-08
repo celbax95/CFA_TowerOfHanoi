@@ -164,7 +164,7 @@ public class FragmentScores extends Fragment implements DiskSelectorListener {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentManager.setFragment(FragmentManager.MENU);
+                onBackPressed();
             }
         });
     }

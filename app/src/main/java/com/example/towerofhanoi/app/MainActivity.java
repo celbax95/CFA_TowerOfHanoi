@@ -13,6 +13,7 @@ import com.example.towerofhanoi.fragment.Fragment;
 import com.example.towerofhanoi.fragment.FragmentGame;
 import com.example.towerofhanoi.fragment.FragmentMenu;
 import com.example.towerofhanoi.fragment.FragmentScores;
+import com.example.towerofhanoi.fragment.FragmentSettings;
 import com.example.towerofhanoi.init.InitApplication;
 
 import java.util.ArrayList;
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements com.example.tower
         addFragment(new FragmentMenu(this, this,  MENU));
         addFragment(new FragmentScores(this, this, SCORES));
         addFragment(new FragmentGame(this, this, GAME));
+        addFragment(new FragmentSettings(this, this, SETTINGS));
 
         setFragment(MENU);
     }

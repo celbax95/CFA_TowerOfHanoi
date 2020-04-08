@@ -91,7 +91,7 @@ public class FragmentGame extends Fragment implements GameListener {
 
         initGame();
 
-        initButtonBack(v);
+        initBackButton(v);
 
         initButtonReset(v);
 
@@ -270,7 +270,7 @@ public class FragmentGame extends Fragment implements GameListener {
         gameFrame.invalidate();
     }
 
-    private void initButtonBack(View v) {
+    private void initBackButton(View v) {
         ImageButton back = v.findViewById(R.id.game_button_back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override

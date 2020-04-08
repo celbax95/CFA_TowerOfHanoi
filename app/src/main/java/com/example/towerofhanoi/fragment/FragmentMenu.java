@@ -1,9 +1,7 @@
 package com.example.towerofhanoi.fragment;
 
-import android.content.Context;
-import android.content.res.Configuration;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,37 +36,51 @@ public class FragmentMenu extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
+        @SuppressLint("InflateParams")
         View v = inflater.inflate(R.layout.fragment_menu, null);
 
-        createDarkLightModeButton(v);
+        initDarkLightModeButton(v);
 
-        createPlayButton(v);
-        createScoresButton(v);
+        initPlayButton(v);
+
+        initScoresButton(v);
+
+        initSettingsButton(v);
 
         return v;
     }
 
-    private void createPlayButton(View v) {
+    private void initSettingsButton(View v) {
+        ImageButton settingsButton = v.findViewById(R.id.menu_button_settings);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentManager.setFragment(FragmentManager.SETTINGS);
+            }
+        });
+    }
+
+    private void initPlayButton(View v) {
         Button playButton = v.findViewById(R.id.menu_button_play);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentManager.setFragment("game");
+                fragmentManager.setFragment(FragmentManager.GAME);
             }
         });
     }
 
-    private void createScoresButton(View v) {
+    private void initScoresButton(View v) {
         scoresButton = v.findViewById(R.id.menu_button_scores);
         scoresButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentManager.setFragment("scores");
+                fragmentManager.setFragment(FragmentManager.SCORES);
             }
         });
     }
 
-    private void createDarkLightModeButton(View v) {
+    private void initDarkLightModeButton(View v) {
         darkLightModeButton = v.findViewById(R.id.menu_button_darkLightMode);
 
         if (InitApplication.getInstance(context).isNightModeEnabled()) {
