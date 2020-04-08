@@ -23,7 +23,7 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements com.example.towerofhanoi.app.FragmentManager {
 
-    private static final String MAIN_FRAGMENT = FragmentManager.SETTINGS;
+    private static final String MAIN_FRAGMENT = FragmentManager.MENU;
 
     private HashMap<String, Fragment> fragments;
 
