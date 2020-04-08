@@ -32,7 +32,7 @@ public class Score {
         int mYear = calendar.get(Calendar.YEAR);
         int mMonth = calendar.get(Calendar.MONTH);
         int mDay = calendar.get(Calendar.DAY_OF_MONTH);
-        int mHour = calendar.get(Calendar.HOUR);
+        int mHour = calendar.get(Calendar.HOUR_OF_DAY);
         int mMinutes = calendar.get(Calendar.MINUTE);
         int mSeconds = calendar.get(Calendar.SECOND);
 
