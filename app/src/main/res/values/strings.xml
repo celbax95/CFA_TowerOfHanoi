@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TowerOfHanoi</string>
+    <string name="app_name">Tower of Hanoi</string>
     <string name="menu_button_play">PLAY</string>
     <string name="menu_button_scores">SCORES</string>
     <string name="menu_text_title">TOWER\nOF\nHANOÏ</string>
