@@ -13,4 +13,8 @@
 
     <attr name="color_game_diskColorMin" format="integer"/>
     <attr name="color_game_diskColorMax" format="integer"/>
+
+    <attr name="color_settings_seekBar_thumb" format="color"/>
+    <attr name="color_settings_seekBar_background" format="color"/>
+    <attr name="color_settings_seekBar_progress" format="color"/>
 </resources>

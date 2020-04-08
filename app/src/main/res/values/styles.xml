@@ -18,6 +18,10 @@
         <item name="color_game_diskText">#000</item>
         <item name="color_game_diskColorMin">150</item>
         <item name="color_game_diskColorMax">220</item>
+
+        <item name="color_settings_seekBar_thumb">#444</item>
+        <item name="color_settings_seekBar_background">#888</item>
+        <item name="color_settings_seekBar_progress">#888</item>
     </style>
 
     <style name="DarkTheme" parent="AppTheme">
@@ -33,6 +37,10 @@
         <item name="color_game_diskText">#000</item>
         <item name="color_game_diskColorMin">120</item>
         <item name="color_game_diskColorMax">190</item>
+
+        <item name="color_settings_seekBar_thumb">#ddd</item>
+        <item name="color_settings_seekBar_background">#888</item>
+        <item name="color_settings_seekBar_progress">#888</item>
     </style>
 
 </resources>

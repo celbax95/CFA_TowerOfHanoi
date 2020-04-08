@@ -152,7 +152,6 @@ public class FragmentScores extends Fragment implements DiskSelectorListener {
                 break;
         }
         if (scores != null) {
-            Log.d("SCORES", "REFRESH");
             scoresAdapter.setScores(scores);
             scoresAdapter.notifyDataSetChanged();
         }

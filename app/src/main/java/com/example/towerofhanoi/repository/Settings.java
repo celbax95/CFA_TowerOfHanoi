@@ -10,7 +10,7 @@ public class Settings {
 
     private static final String DISKS_NUMBER = "DISKS_NUMBER";
 
-    public static final int MIN_DISKS_COUNT = 3;
+    public static final int MIN_DISK_COUNT = 3;
 
     private static Settings instance = null;
 
@@ -18,7 +18,7 @@ public class Settings {
 
     private int disksNumber;
 
-    public void setDisksNumber(int disksNumber) {
+    public void setDiskCount(int disksNumber) {
         this.disksNumber = disksNumber;
 
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -36,7 +36,7 @@ public class Settings {
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         int i = 0;
-        disksNumber = pref.getInt(DISKS_NUMBER, MIN_DISKS_COUNT);
+        disksNumber = pref.getInt(DISKS_NUMBER, MIN_DISK_COUNT);
     }
 
     public static Settings getInstance(Context context) {

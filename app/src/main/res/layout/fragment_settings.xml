@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/settings_ll_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="?attr/color_background">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,4 +35,49 @@
             android:textSize="50sp" />
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/settings_text_diskCount"
+            android:layout_marginTop="115dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Number of disks : "
+            android:textColor="?attr/color_text"
+            android:textSize="20sp"/>
+
+        <SeekBar
+            android:id="@+id/settings_seekbar_diskCount"
+            android:layout_marginTop="30dp"
+            android:layout_width="220dp"
+            android:scaleX="1.4"
+            android:scaleY="1.4"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:thumbTint="?attr/color_settings_seekBar_thumb"
+            android:progressTint="?attr/color_settings_seekBar_progress"
+            android:progressBackgroundTint="?attr/color_settings_seekBar_thumb"
+            />
+
+        <Button
+            android:id="@+id/settings_button_deleteScores"
+            android:layout_marginTop="135dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete all scores"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/shape_menu_button_roundmedium"
+            android:paddingVertical="20dp"
+            android:paddingHorizontal="30dp"
+            android:textSize="18sp"
+            android:textColor="?attr/color_menu_button_text"
+            />
+
+    </LinearLayout>
+
 </LinearLayout>

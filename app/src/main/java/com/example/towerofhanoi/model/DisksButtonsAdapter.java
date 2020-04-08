@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.towerofhanoi.R;
-import com.example.towerofhanoi.fragment.FragmentScores;
 import com.example.towerofhanoi.repository.Settings;
 
 public class DisksButtonsAdapter extends RecyclerView.Adapter<DisksButtonsAdapter.MyViewHolder> {
@@ -39,7 +38,7 @@ public class DisksButtonsAdapter extends RecyclerView.Adapter<DisksButtonsAdapte
 
     public DisksButtonsAdapter(Context context, int maxDisks) {
         this.maxDisks = maxDisks;
-        this.minDisks = Settings.MIN_DISKS_COUNT;
+        this.minDisks = Settings.MIN_DISK_COUNT;
         this.context = context;
         selected = Settings.getInstance(context).getDiskCount();
     }

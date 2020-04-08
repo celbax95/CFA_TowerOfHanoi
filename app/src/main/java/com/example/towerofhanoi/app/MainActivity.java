@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
 import com.example.towerofhanoi.R;
 import com.example.towerofhanoi.fragment.Fragment;
@@ -23,6 +22,8 @@ import java.util.List;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements com.example.towerofhanoi.app.FragmentManager {
+
+    private static final String MAIN_FRAGMENT = FragmentManager.SETTINGS;
 
     private HashMap<String, Fragment> fragments;
 
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements com.example.tower
         addFragment(new FragmentGame(this, this, GAME));
         addFragment(new FragmentSettings(this, this, SETTINGS));
 
-        setFragment(MENU);
+        setFragment(MAIN_FRAGMENT);
     }
 
     @Override
